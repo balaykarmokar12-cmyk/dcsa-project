@@ -1,107 +1,278 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Student Management System - BOU DCSA</title>
-  <!-- React & Tailwind CSS CDN -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-100 min-h-screen p-4 md:p-8">
 
-  <div id="root"></div>
+<body>
 
-  <script type="text/babel">
-    const { useState } = React;
+  <div class="container">
 
-    function App() {
-      const [students, setStudents] = useState([
-        { id: 1, student_id: '2415082008', name: 'Balay Karmaker', email: 'balaykarmokar12@gmail.com', program: 'DCSA', gpa: '3.85' }
-      ]);
-      const [form, setForm] = useState({ student_id: '', name: '', email: '', program: 'DCSA', gpa: '' });
+    <!-- Header -->
+    <header class="header">
+      <h1>BANGLADESH OPEN UNIVERSITY</h1>
+      <h2>DCSA Project: Student Management System</h2>
 
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        if (!form.student_id || !form.name || !form.email) return alert("All fields are required!");
+      <div class="user-info">
+        <span><strong>Presented By:</strong> Balay Karmaker</span>
+        <span class="separator">|</span>
+        <span><strong>ID:</strong> 2415082008</span>
+      </div>
+    </header>
 
-        setStudents([{ ...form, id: Date.now() }, ...students]);
-        setForm({ student_id: '', name: '', email: '', program: 'DCSA', gpa: '' });
-        alert("Student Added Successfully to System!");
-      };
 
-      return (
-        <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-6">
-          <header className="border-b pb-4 mb-6 text-center">
-            <h1 className="text-2xl font-bold text-blue-700">BANGLADESH OPEN UNIVERSITY</h1>
-            <h2 className="text-lg font-semibold text-gray-700">DCSA Project: Student Management System</h2>
-            <div className="mt-2 text-sm text-gray-600">
-              <span><strong>Presented By:</strong> Balay Karmaker</span> | 
-              <span> <strong>ID:</strong> 2415082008</span>
-            </div>
-          </header>
+    <!-- Navigation -->
+    <div class="tab-navigation">
 
-          <!-- Input Form -->
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 bg-blue-50 p-4 rounded-lg">
-            <div>
-              <label className="block text-sm font-medium mb-1">Student ID</label>
-              <input type="text" value={form.student_id} onChange={e=>setForm({...form, student_id: e.target.value})} className="w-full p-2 border rounded" placeholder="2415082008" required />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Full Name</label>
-              <input type="text" value={form.name} onChange={e=>setForm({...form, name: e.target.value})} className="w-full p-2 border rounded" placeholder="Student Name" required />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Email</label>
-              <input type="email" value={form.email} onChange={e=>setForm({...form, email: e.target.value})} className="w-full p-2 border rounded" placeholder="student@gmail.com" required />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Program & GPA</label>
-              <div className="flex gap-2">
-                <input type="text" value={form.program} onChange={e=>setForm({...form, program: e.target.value})} className="w-2/3 p-2 border rounded" required />
-                <input type="number" step="0.01" value={form.gpa} onChange={e=>setForm({...form, gpa: e.target.value})} className="w-1/3 p-2 border rounded" placeholder="GPA" />
-              </div>
-            </div>
-            <button type="submit" className="md:col-span-2 bg-blue-600 text-white font-bold py-2 rounded hover:bg-blue-700 transition">
-              Add Student to Database
-            </button>
-          </form>
+      <button
+        id="tabRegisterBtn"
+        class="tab-btn active"
+        type="button"
+        onclick="switchTab('register')">
+        Add / Register Student
+      </button>
 
-          <!-- Student List Table -->
-          <div>
-            <h3 className="text-lg font-bold mb-3 text-gray-800">Database Records</h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse border border-gray-200">
-                <thead>
-                  <tr className="bg-blue-600 text-white">
-                    <th className="p-2 border">ID</th>
-                    <th className="p-2 border">Name</th>
-                    <th className="p-2 border">Email</th>
-                    <th className="p-2 border">Program</th>
-                    <th className="p-2 border">GPA</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {students.map((s) => (
-                    <tr key={s.id} className="hover:bg-gray-50 border-b">
-                      <td className="p-2 border font-mono">{s.student_id}</td>
-                      <td className="p-2 border font-semibold">{s.name}</td>
-                      <td className="p-2 border text-sm">{s.email}</td>
-                      <td className="p-2 border">{s.program}</td>
-                      <td className="p-2 border">{s.gpa || 'N/A'}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+      <button
+        id="tabLoginBtn"
+        class="tab-btn"
+        type="button"
+        onclick="switchTab('login')">
+        Student Login Portal
+      </button>
+
+    </div>
+
+
+    <!-- Registration Section -->
+    <section id="registerSection" class="section active-section">
+
+      <h3>Register New Student</h3>
+
+      <form id="studentForm" class="student-form">
+
+        <div class="form-group">
+          <label for="student_id">Student ID</label>
+
+          <input
+            type="text"
+            id="student_id"
+            placeholder="2415082008"
+            required>
         </div>
-      );
-    }
 
-    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-  </script>
+
+        <div class="form-group">
+          <label for="name">Full Name</label>
+
+          <input
+            type="text"
+            id="name"
+            placeholder="Balay Karmaker"
+            required>
+        </div>
+
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+
+          <input
+            type="email"
+            id="email"
+            placeholder="example@gmail.com"
+            required>
+        </div>
+
+
+        <div class="form-group">
+          <label for="password">Password</label>
+
+          <input
+            type="password"
+            id="password"
+            placeholder="Create Password"
+            minlength="3"
+            required>
+        </div>
+
+
+        <div class="form-group">
+          <label for="program">Program</label>
+
+          <input
+            type="text"
+            id="program"
+            value="DCSA"
+            required>
+        </div>
+
+
+        <div class="form-group">
+          <label for="gpa">GPA</label>
+
+          <input
+            type="number"
+            id="gpa"
+            placeholder="3.85"
+            min="0"
+            max="4"
+            step="0.01">
+        </div>
+
+
+        <button
+          type="submit"
+          class="btn-submit">
+          Save Student
+        </button>
+
+      </form>
+
+    </section>
+
+
+    <!-- Login Section -->
+    <section id="loginSection" class="section">
+
+      <h3>Student Login</h3>
+
+      <form id="loginForm" class="student-form">
+
+        <div class="form-group">
+          <label for="login_id">Student ID / Email</label>
+
+          <input
+            type="text"
+            id="login_id"
+            placeholder="Student ID or Email"
+            required>
+        </div>
+
+
+        <div class="form-group">
+          <label for="login_password">Password</label>
+
+          <input
+            type="password"
+            id="login_password"
+            placeholder="Enter Password"
+            required>
+        </div>
+
+
+        <button
+          type="submit"
+          class="btn-submit">
+          Login
+        </button>
+
+      </form>
+
+
+      <!-- Student Profile -->
+      <div
+        id="loginProfileCard"
+        class="profile-card hidden">
+
+        <h4>Student Profile</h4>
+
+        <p>
+          <strong>ID:</strong>
+          <span id="profId"></span>
+        </p>
+
+        <p>
+          <strong>Name:</strong>
+          <span id="profName"></span>
+        </p>
+
+        <p>
+          <strong>Email:</strong>
+          <span id="profEmail"></span>
+        </p>
+
+        <p>
+          <strong>Program:</strong>
+          <span id="profProgram"></span>
+        </p>
+
+        <p>
+          <strong>GPA:</strong>
+          <span id="profGpa"></span>
+        </p>
+
+        <button
+          type="button"
+          class="btn-logout"
+          onclick="logoutStudent()">
+          Logout
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- Database Records -->
+    <section class="table-container">
+
+      <div class="table-header">
+
+        <h3>Student Database Records</h3>
+
+        <input
+          type="text"
+          id="searchInput"
+          class="search-input"
+          placeholder="Search Student...">
+
+      </div>
+
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Program</th>
+              <th>GPA</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody id="studentTableBody">
+          </tbody>
+
+        </table>
+
+      </div>
+
+      <p id="emptyMessage" class="empty-message hidden">
+        No student records found.
+      </p>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>
+        BOU DCSA Student Management System
+      </p>
+    </footer>
+
+  </div>
+
+
+  <script src="script.js"></script>
+
 </body>
 </html>
