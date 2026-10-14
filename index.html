@@ -1,278 +1,42 @@
- <!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Student Management System - BOU DCSA</title>
-
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUTURE NETWORK NOC v5.2 FINAL</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root{--bg:#050a14;--card:#0f1a2e;--b:#1e3a5f;--g:#00ff88;--r:#ff2e63;--bl:#00d4ff;--y:#ffcc00;--t:#e2e8f0;--m:#94a3b8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:monospace;background:var(--bg);color:var(--t)}
+#loginPage{position:fixed;inset:0;z-index:9999;background:radial-gradient(circle at 20% 20%,#0f2a4a 0%,#050a14 70%);display:flex;align-items:center;justify-content:center}
+.loginBox{background:#12243f;border:1px solid var(--b);border-radius:20px;padding:35px;width:95%;max-width:400px}
+.inp{width:100%;background:#0a152a;border:1px solid var(--b);border-radius:10px;padding:13px;color:#fff;margin-bottom:12px}
+.btn{width:100%;background:linear-gradient(90deg,var(--bl),var(--g));border:none;border-radius:10px;padding:13px;color:#000;font-weight:800;cursor:pointer}
+.topbar{height:58px;background:#0f1a2e;border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;padding:0 15px;position:sticky;top:0;z-index:100}
+.nav{display:flex;gap:5px;overflow:auto;padding:8px 12px;background:#0a152a;border-bottom:1px solid var(--b);position:sticky;top:58px;z-index:90}
+.navBtn{white-space:nowrap;padding:8px 12px;border-radius:8px;border:1px solid var(--b);background:#0f1a2e;color:var(--m);font-size:10px;cursor:pointer}
+.navBtn.active{border-color:var(--bl);color:#fff;background:#00d4ff22}
+.main{padding:12px;max-width:1400px;margin:0 auto}
+.grid{display:grid;gap:10px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.card{background:#0f1a2e;border:1px solid var(--b);border-radius:14px;padding:14px}
+.kTitle{font-size:10px;color:var(--m);margin-bottom:5px}
+.kVal{font-size:22px;font-weight:800}
+.badge{font-size:10px;padding:3px 7px;border-radius:20px;border:1px solid}
+.bg{background:rgba(0,255,136,0.1);border-color:var(--g);color:var(--g)}
+.br{background:rgba(255,46,99,0.1);border-color:var(--r);color:var(--r)}
+.tableWrap{overflow:auto;border-radius:10px;border:1px solid var(--b)}
+table{width:100%;border-collapse:collapse;font-size:11px;min-width:650px}
+th{background:#0a152a;color:var(--m);padding:8px 10px;text-align:left;font-size:9px}
+td{padding:8px 10px;border-top:1px solid #1e3a5f66}
+.iSm{background:#0a152a;border:1px solid var(--b);border-radius:6px;padding:8px;color:#fff;width:100%;font-size:11px}
+#map{height:500px;border-radius:14px;border:1px solid var(--b)}
+.hidden{display:none!important}
+</style>
 </head>
-
 <body>
-
-  <div class="container">
-
-    <!-- Header -->
-    <header class="header">
-      <h1>BANGLADESH OPEN UNIVERSITY</h1>
-      <h2>DCSA Project: Student Management System</h2>
-
-      <div class="user-info">
-        <span><strong>Presented By:</strong> Balay Karmaker</span>
-        <span class="separator">|</span>
-        <span><strong>ID:</strong> 2415082008</span>
-      </div>
-    </header>
-
-
-    <!-- Navigation -->
-    <div class="tab-navigation">
-
-      <button
-        id="tabRegisterBtn"
-        class="tab-btn active"
-        type="button"
-        onclick="switchTab('register')">
-        Add / Register Student
-      </button>
-
-      <button
-        id="tabLoginBtn"
-        class="tab-btn"
-        type="button"
-        onclick="switchTab('login')">
-        Student Login Portal
-      </button>
-
-    </div>
-
-
-    <!-- Registration Section -->
-    <section id="registerSection" class="section active-section">
-
-      <h3>Register New Student</h3>
-
-      <form id="studentForm" class="student-form">
-
-        <div class="form-group">
-          <label for="student_id">Student ID</label>
-
-          <input
-            type="text"
-            id="student_id"
-            placeholder="2415082008"
-            required>
-        </div>
-
-
-        <div class="form-group">
-          <label for="name">Full Name</label>
-
-          <input
-            type="text"
-            id="name"
-            placeholder="Balay Karmaker"
-            required>
-        </div>
-
-
-        <div class="form-group">
-          <label for="email">Email Address</label>
-
-          <input
-            type="email"
-            id="email"
-            placeholder="example@gmail.com"
-            required>
-        </div>
-
-
-        <div class="form-group">
-          <label for="password">Password</label>
-
-          <input
-            type="password"
-            id="password"
-            placeholder="Create Password"
-            minlength="3"
-            required>
-        </div>
-
-
-        <div class="form-group">
-          <label for="program">Program</label>
-
-          <input
-            type="text"
-            id="program"
-            value="DCSA"
-            required>
-        </div>
-
-
-        <div class="form-group">
-          <label for="gpa">GPA</label>
-
-          <input
-            type="number"
-            id="gpa"
-            placeholder="3.85"
-            min="0"
-            max="4"
-            step="0.01">
-        </div>
-
-
-        <button
-          type="submit"
-          class="btn-submit">
-          Save Student
-        </button>
-
-      </form>
-
-    </section>
-
-
-    <!-- Login Section -->
-    <section id="loginSection" class="section">
-
-      <h3>Student Login</h3>
-
-      <form id="loginForm" class="student-form">
-
-        <div class="form-group">
-          <label for="login_id">Student ID / Email</label>
-
-          <input
-            type="text"
-            id="login_id"
-            placeholder="Student ID or Email"
-            required>
-        </div>
-
-
-        <div class="form-group">
-          <label for="login_password">Password</label>
-
-          <input
-            type="password"
-            id="login_password"
-            placeholder="Enter Password"
-            required>
-        </div>
-
-
-        <button
-          type="submit"
-          class="btn-submit">
-          Login
-        </button>
-
-      </form>
-
-
-      <!-- Student Profile -->
-      <div
-        id="loginProfileCard"
-        class="profile-card hidden">
-
-        <h4>Student Profile</h4>
-
-        <p>
-          <strong>ID:</strong>
-          <span id="profId"></span>
-        </p>
-
-        <p>
-          <strong>Name:</strong>
-          <span id="profName"></span>
-        </p>
-
-        <p>
-          <strong>Email:</strong>
-          <span id="profEmail"></span>
-        </p>
-
-        <p>
-          <strong>Program:</strong>
-          <span id="profProgram"></span>
-        </p>
-
-        <p>
-          <strong>GPA:</strong>
-          <span id="profGpa"></span>
-        </p>
-
-        <button
-          type="button"
-          class="btn-logout"
-          onclick="logoutStudent()">
-          Logout
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- Database Records -->
-    <section class="table-container">
-
-      <div class="table-header">
-
-        <h3>Student Database Records</h3>
-
-        <input
-          type="text"
-          id="searchInput"
-          class="search-input"
-          placeholder="Search Student...">
-
-      </div>
-
-
-      <div class="table-wrapper">
-
-        <table>
-
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Program</th>
-              <th>GPA</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-
-          <tbody id="studentTableBody">
-          </tbody>
-
-        </table>
-
-      </div>
-
-      <p id="emptyMessage" class="empty-message hidden">
-        No student records found.
-      </p>
-
-    </section>
-
-
-    <!-- Footer -->
-    <footer class="footer">
-      <p>
-        BOU DCSA Student Management System
-      </p>
-    </footer>
-
-  </div>
-
-
-  <script src="script.js"></script>
-
-</body>
-</html>
+<div id="loginPage"><div class="loginBox"><h1 style="text-align:center;color:var(--bl)">FUTURE NETWORK</h1><p style="color:var(--m);text-align:center;font-size:11px;margin:8px 0 20px">NOC v5.2 FINAL FIXED // AUTO LOGIN</p><input id="u" class="inp" value="Admin"><input id="p" type="password" class="inp" value="@dmin0000"><button class="btn" id="loginBtn" type="button" onclick="goApp()">SECURE LOGIN - TAP TO ENTER</button><p style="color:var(--g);font-size:9px;text-align:center;margin-top:12px">✓ Click করলেই ঢুকে যাবে - No Password Check</p><p style="color:var(--m);font-size:8px;text-align:center;margin-top:6px">Auto login in 3 sec if not clicked</p><div id="loginErr" style="color:var(--r);font-size:10px;margin-top:10px;text-align:center"></div></div></div>
