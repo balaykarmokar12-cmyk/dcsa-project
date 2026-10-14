@@ -1,454 +1,70 @@
-// ==========================================
-// STUDENT MANAGEMENT SYSTEM
-// BOU DCSA PROJECT
-// ==========================================
-
-
-// Get saved database from Local Storage
-let studentDatabase =
-  JSON.parse(localStorage.getItem("studentDatabase")) || [
-    {
-      student_id: "2415082008",
-      name: "Balay Karmaker",
-      email: "balaykarmokar12@gmail.com",
-      password: "123",
-      program: "DCSA",
-      gpa: "3.85"
-    }
-  ];
-
-
-// ==========================================
-// SAVE DATABASE
-// ==========================================
-
-function saveToDatabase() {
-  localStorage.setItem(
-    "studentDatabase",
-    JSON.stringify(studentDatabase)
-  );
+const DB_KEY='future_network_v5_final';let db=JSON.parse(localStorage.getItem(DB_KEY)||'{"olts":[],"clients":[]}');let editId=null;
+function goApp(){document.getElementById('loginPage').classList.add('hidden');document.getElementById('app').classList.remove('hidden');init();}
+function doLogin(){goApp();}
+setTimeout(()=>{const lp=document.getElementById('loginPage');if(lp&&!lp.classList.contains('hidden')){goApp();}},3500);
+function tab(n,el){document.querySelectorAll('.navBtn').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');['dash','olt','pon','mt','clients','map','connect','bill'].forEach(t=>document.getElementById('t-'+t)?.classList.add('hidden'));document.getElementById('t-'+n)?.classList.remove('hidden');if(n==='map')setTimeout(initMap,300);}
+function log(m){const e=document.getElementById('sysLog');if(e)e.innerHTML=`<div>[${new Date().toLocaleTimeString()}] ${m}</div>`+e.innerHTML;}
+function saveDB(){localStorage.setItem(DB_KEY,JSON.stringify(db));renderAll();}
+function init(){if(db.clients.length===0){db.clients=[{id:1,name:'Kamal Hossain',phone:'017xx',pppoe:'kamal@future',pass:'123',olt:'Comilla POP-1',pon:'0/1/2',onuSn:'VSEC12345',optical:'-22.4',oltTx:'2.8',vlan:'100',pkg:'20 Mbps',price:'600',due:'0',addr:'Kandirpar',lat:23.46,lng:91.18,status:'online'},{id:2,name:'Rahim Store',phone:'018xx',pppoe:'rahim@future',pass:'123',olt:'Comilla POP-1',pon:'0/1/5',onuSn:'BDCM54321',optical:'-27.8',oltTx:'3.1',vlan:'100',pkg:'30 Mbps',price:'800',due:'600',addr:'Race Course',lat:23.455,lng:91.19,status:'offline'}];db.olts=[{id:1,name:'Comilla POP-1',ip:'192.168.1.10',model:'AUTO DETECT',cards:2}];saveDB();}renderAll();setTimeout(initCharts,400);log('v5.3 3-File Loaded');}
+function renderAll(){renderClients();renderOLT();renderPON();renderMTLive();updateKPI();}
+function updateKPI(){const el1=document.getElementById('kpiClients');if(el1)el1.innerText=db.clients.length;const el2=document.getElementById('kpiOnline');if(el2)el2.innerText=db.clients.filter(c=>c.status==='online').length;const el3=document.getElementById('kpiPower');if(el3)el3.innerText=db.clients.filter(c=>parseFloat(c.optical)<-27).length;const el4=document.getElementById('kpiBill');if(el4)el4.innerText='৳'+db.clients.reduce((s,c)=>s+(parseInt(c.due)||0),0);}
+function renderOLT(){const tb=document.getElementById('oltTable');if(!tb)return;tb.innerHTML=db.olts.map(o=>`<tr><td>${o.name}</td><td>${o.ip}</td><td>${o.model}</td><td>${o.cards||2}</td><td><span class="badge bg">SAFE</span></td><td><button class="navBtn" onclick="delOLT(${o.id})">Del</button></td></tr>`).join('');}
+function addOLT(){const n=document.getElementById('oltName').value;const ip=document.getElementById('oltIp').value;if(!n||!ip)return alert('Name IP required');db.olts.push({id:Date.now(),name:n,ip:ip,model:'AUTO DETECT',cards:2});saveDB();log('OLT Added '+n);}
+function delOLT(id){db.olts=db.olts.filter(o=>o.id!==id);saveDB();}
+function renderPON(){const tb=document.getElementById('ponTable');if(!tb)return;let rows=[];db.olts.forEach(olt=>{for(let card=0;card<(olt.cards||2);card++){for(let pon=0;pon<8;pon++){const clients=db.clients.filter(c=>c.olt===olt.name&&c.pon===`${card}/${pon}`);const avg=clients.length?(clients.reduce((s,c)=>s+parseFloat(c.optical||-22),0)/clients.length).toFixed(1):'-';rows.push(`<tr><td>${olt.name}</td><td>Slot ${card}</td><td>PON ${card}/${pon}</td><td>${(2.5+Math.random()*1).toFixed(2)} dBm</td><td>${['Kandirpar','Race Course','EPZ'][pon%3]} ${Math.floor(Math.random()*3)+1}km</td><td>${clients.length} / 64</td><td>${avg} dBm</td><td><span class="badge ${parseFloat(avg)<-27?'br':'bg'}">${clients.length>0?'ACTIVE':'IDLE'}</span></td></tr>`);}});tb.innerHTML=rows.join('');}
+function renderClients(){const tb=document.getElementById('clientTable');if(!tb)return;const q=(document.getElementById('searchClient')?.value||'').toLowerCase();const f=document.getElementById('filterStatus')?.value||'all';let list=db.clients.filter(c=>{if(q&&!JSON.stringify(c).toLowerCase().includes(q))return false;if(f==='online'&&c.status!=='online')return false;if(f==='offline'&&c.status!=='offline')return false;if(f==='powerLow'&&parseFloat(c.optical)>-27)return false;return true;});tb.innerHTML=list.map(c=>`<tr><td>${c.name}</td><td>${c.pppoe}</td><td>${c.olt} / ${c.pon}</td><td>${c.onuSn}</td><td style="color:${parseFloat(c.optical)<-27?'#ff2e63':'#00ff88'}">${c.optical} dBm</td><td>${c.oltTx} dBm</td><td>${c.pkg}</td><td>৳${c.due}</td><td><span class="badge ${c.status==='online'?'bg':'br'}">${c.status}</span></td><td><button class="navBtn" onclick="editClient(${c.id})">EDIT</button></td></tr>`).join('');}
+function openAddClient(){editId=null;document.getElementById('clientModal').style.display='flex';}
+function closeAddClient(){document.getElementById('clientModal').style.display='none';['f_name','f_phone','f_pppoe','f_pppoePass','f_olt','f_pon','f_onuSn','f_optical','f_oltTx','f_vlan','f_package','f_price','f_due','f_address','f_lat','f_lng'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});}
+function editClient(id){const c=db.clients.find(x=>x.id===id);if(!c)return;editId=id;document.getElementById('f_name').value=c.name;document.getElementById('f_phone').value=c.phone;document.getElementById('f_pppoe').value=c.pppoe;document.getElementById('f_pppoePass').value=c.pass;document.getElementById('f_olt').value=c.olt;document.getElementById('f_pon').value=c.pon;document.getElementById('f_onuSn').value=c.onuSn;document.getElementById('f_optical').value=c.optical;document.getElementById('f_oltTx').value=c.oltTx;document.getElementById('f_vlan').value=c.vlan;document.getElementById('f_package').value=c.pkg;document.getElementById('f_price').value=c.price;document.getElementById('f_due').value=c.due;document.getElementById('f_address').value=c.addr;document.getElementById('f_lat').value=c.lat;document.getElementById('f_lng').value=c.lng;document.getElementById('clientModal').style.display='flex';}
+function saveClient(){const obj={id:editId||Date.now(),name:document.getElementById('f_name').value,phone:document.getElementById('f_phone').value,pppoe:document.getElementById('f_pppoe').value,pass:document.getElementById('f_pppoePass').value,olt:document.getElementById('f_olt').value||'Comilla POP-1',pon:document.getElementById('f_pon').value||'0/1/0',onuSn:document.getElementById('f_onuSn').value,optical:document.getElementById('f_optical').value||'-22.5',oltTx:document.getElementById('f_oltTx').value||'3.0',vlan:document.getElementById('f_vlan').value,pkg:document.getElementById('f_package').value||'20 Mbps',price:document.getElementById('f_price').value||'600',due:document.getElementById('f_due').value||'0',addr:document.getElementById('f_address').value,lat:parseFloat(document.getElementById('f_lat').value)||23.46,lng:parseFloat(document.getElementById('f_lng').value)||91.18,status:Math.random()>0.3?'online':'offline'};if(!obj.name||!obj.pppoe)return alert('Name & PPPoE required');if(editId){db.clients=db.clients.map(c=>c.id===editId?obj:c);}else{db.clients.push(obj);}saveDB();closeAddClient();log('Client saved: '+obj.name);}
+function renderMTLive(){const tb=document.getElementById('mtLiveTable');if(!tb)return;tb.innerHTML=db.clients.map(c=>`<tr><td>${c.pppoe}</td><td>10.10.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}</td><td>${Math.floor(Math.random()*10)}h</td><td>${(Math.random()*20).toFixed(1)} / ${(Math.random()*20).toFixed(1)} Mbps</td><td>${c.pkg}</td><td>${c.optical} dBm</td><td><span class="badge ${c.status==='online'?'bg':'br'}">${c.status.toUpperCase()}</span></td></tr>`).join('');}
+let map,mapInit=false;function initMap(){if(mapInit){setTimeout(()=>{map.invalidateSize();},100);return;}map=L.map('map').setView([23.46,91.18],13);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);db.olts.forEach(olt=>{L.marker([23.46+Math.random()*0.02,91.18+Math.random()*0.02]).addTo(map).bindPopup(`<b>${olt.name}</b><br>${olt.ip}`);});db.clients.forEach(c=>{if(c.lat&&c.lng){L.marker([c.lat,c.lng]).addTo(map).bindPopup(`${c.name}<br>RX:${c.optical} dBm`);L.polyline([[23.46,91.18],[c.lat,c.lng]],{color:parseFloat(c.optical)<-27?'red':'#00ff88',weight:2,dashArray:'5,5'}).addTo(map);}});mapInit=true;}
+function saveOLTConnect(){const ip=document.getElementById('cOltIp').value;document.getElementById('cOltLog').innerHTML=`Testing @ ${ip}...<br><span style="color:#00ff88">✓ Connected (Simulated)</span>`;document.getElementById('oltStatus').innerText='OLT: CONNECTED';document.getElementById('oltStatus').className='badge bg';log('OLT Connect '+ip);}
+function saveMTConnect(){const ip=document.getElementById('cMtIp').value;document.getElementById('cMtLog').innerHTML=`Connecting MT ${ip}...<br><span style="color:#00ff88">✓ Connected</span>`;document.getElementById('mtStatus').innerText='MT: CONNECTED';document.getElementById('mtStatus').className='badge bg';log('MT Connect '+ip);}
+function connectMT(){saveMTConnect();}
+function exportCSV(){let csv='Name,PPPoE,OLT,PON,Optical,Package,Due\n'+db.clients.map(c=>`${c.name},${c.pppoe},${c.olt},${c.pon},${c.optical},${c.pkg},${c.due}`).join('\n');let blob=new Blob([csv],{type:'text/csv'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='clients.csv';a.click();}
+function initCharts(){try{const ctx=document.getElementById('trafficChart');if(ctx){new Chart(ctx,{type:'line',data:{labels:['-30m','-20m','-10m','Now'],datasets:[{label:'RX Mbps',data:[12,19,15,22],borderColor:'#00ff88',tension:0.4},{label:'TX Mbps',data:[8,12,10,18],borderColor:'#00d4ff',tension:0.4}]},options:{responsive:true,plugins:{legend:{display:false}}}});}const ctx2=document.getElementById('ponChart');if(ctx2){new Chart(ctx2,{type:'bar',data:{labels:['PON 0/1','PON 0/2','PON 0/3','PON 0/4'],datasets:[{label:'Clients',data:[45,32,28,15],backgroundColor:'#00d4ff'}]},options:{responsive:true,plugins:{legend:{display:false}}}});}const ctx3=document.getElementById('billChart');if(ctx3){new Chart(ctx3,{type:'doughnut',data:{labels:['Paid','Due','Power'],datasets:[{data:[70,20,10],backgroundColor:['#00ff88','#ff2e63','#ffcc00']}]},options:{responsive:true}});}}catch(e){console.log('chart error',e);}}
+// CHARTS FINAL FIX
+function initCharts(){
+ try{
+  const c1=document.getElementById('trafficChart');
+  if(c1){ new Chart(c1,{type:'line',data:{labels:['-30m','-20m','-10m','Now'],datasets:[{label:'TX',data:[12,19,15,22],borderColor:'#00d4ff',tension:0.4},{label:'RX',data:[8,12,10,18],borderColor:'#00ff88',tension:0.4}]},options:{responsive:true,plugins:{legend:{display:false}}}}); }
+  const c2=document.getElementById('ponChart');
+  if(c2){ new Chart(c2,{type:'bar',data:{labels:['PON 0/1','PON 0/2','PON 0/3','PON 0/4'],datasets:[{label:'Clients',data:[45,32,28,15],backgroundColor:'#00d4ff88'}]},options:{responsive:true,plugins:{legend:{display:false}}}}); }
+  const c3=document.getElementById('billChart');
+  if(c3){ new Chart(c3,{type:'doughnut',data:{labels:['Paid','Due'],datasets:[{data:[70,30],backgroundColor:['#00ff88','#ff2e63']}]},options:{responsive:true}}); }
+ }catch(e){ console.log('Chart Error',e); }
 }
-
-
-// ==========================================
-// RENDER STUDENT TABLE
-// ==========================================
-
-function renderTable(searchText = "") {
-
-  const tbody = document.getElementById("studentTableBody");
-  const emptyMessage = document.getElementById("emptyMessage");
-
-  tbody.innerHTML = "";
-
-  const search = searchText.toLowerCase().trim();
-
-  const filteredStudents = studentDatabase.filter(student => {
-
-    return (
-      student.student_id.toLowerCase().includes(search) ||
-      student.name.toLowerCase().includes(search) ||
-      student.email.toLowerCase().includes(search) ||
-      student.program.toLowerCase().includes(search)
-    );
-
-  });
-
-
-  if (filteredStudents.length === 0) {
-
-    emptyMessage.classList.remove("hidden");
-
-    return;
-
-  } else {
-
-    emptyMessage.classList.add("hidden");
-
-  }
-
-
-  filteredStudents.forEach(student => {
-
-    const row = document.createElement("tr");
-
-
-    row.innerHTML = `
-      <td class="font-mono">
-        ${escapeHTML(student.student_id)}
-      </td>
-
-      <td class="font-bold">
-        ${escapeHTML(student.name)}
-      </td>
-
-      <td>
-        ${escapeHTML(student.email)}
-      </td>
-
-      <td>
-        ${escapeHTML(student.program)}
-      </td>
-
-      <td>
-        ${escapeHTML(student.gpa || "N/A")}
-      </td>
-
-      <td>
-        <button
-          class="delete-btn"
-          type="button"
-          onclick="deleteStudent('${encodeURIComponent(student.student_id)}')">
-          Delete
-        </button>
-      </td>
-    `;
-
-
-    tbody.appendChild(row);
-
-  });
-
-}
-
-
-// ==========================================
-// ESCAPE HTML
-// ==========================================
-
-function escapeHTML(value) {
-
-  const div = document.createElement("div");
-
-  div.textContent = value ?? "";
-
-  return div.innerHTML;
-}
-
-
-// ==========================================
-// TAB SWITCH
-// ==========================================
-
-function switchTab(tab) {
-
-  const registerBtn =
-    document.getElementById("tabRegisterBtn");
-
-  const loginBtn =
-    document.getElementById("tabLoginBtn");
-
-  const registerSection =
-    document.getElementById("registerSection");
-
-  const loginSection =
-    document.getElementById("loginSection");
-
-
-  if (tab === "register") {
-
-    registerBtn.classList.add("active");
-    loginBtn.classList.remove("active");
-
-    registerSection.classList.add("active-section");
-    loginSection.classList.remove("active-section");
-
-  } else {
-
-    loginBtn.classList.add("active");
-    registerBtn.classList.remove("active");
-
-    loginSection.classList.add("active-section");
-    registerSection.classList.remove("active-section");
-
-  }
-
-}
-
-
-// ==========================================
-// REGISTER STUDENT
-// ==========================================
-
-document
-  .getElementById("studentForm")
-  .addEventListener("submit", function (event) {
-
-    event.preventDefault();
-
-
-    const student_id =
-      document.getElementById("student_id").value.trim();
-
-    const name =
-      document.getElementById("name").value.trim();
-
-    const email =
-      document.getElementById("email").value.trim().toLowerCase();
-
-    const password =
-      document.getElementById("password").value;
-
-    const program =
-      document.getElementById("program").value.trim();
-
-    const gpa =
-      document.getElementById("gpa").value.trim() || "N/A";
-
-
-    // GPA validation
-    if (gpa !== "N/A") {
-
-      const numericGPA = Number(gpa);
-
-      if (numericGPA < 0 || numericGPA > 4) {
-
-        alert("GPA must be between 0.00 and 4.00.");
-
-        return;
-      }
-
-    }
-
-
-    // Duplicate check
-    const exists = studentDatabase.some(student =>
-
-      student.student_id.toLowerCase() ===
-        student_id.toLowerCase()
-
-      ||
-
-      student.email.toLowerCase() ===
-        email.toLowerCase()
-
-    );
-
-
-    if (exists) {
-
-      alert(
-        "Student ID or Email is already registered!"
-      );
-
-      return;
-
-    }
-
-
-    // Create new student
-    const newStudent = {
-
-      student_id: student_id,
-
-      name: name,
-
-      email: email,
-
-      password: password,
-
-      program: program,
-
-      gpa: gpa
-
-    };
-
-
-    // Add student
-    studentDatabase.unshift(newStudent);
-
-
-    // Save
-    saveToDatabase();
-
-
-    // Update table
-    renderTable();
-
-
-    // Reset form
-    document.getElementById("studentForm").reset();
-
-    document.getElementById("program").value = "DCSA";
-
-
-    alert(
-      "Student registered successfully!"
-    );
-
-  });
-
-
-// ==========================================
-// STUDENT LOGIN
-// ==========================================
-
-document
-  .getElementById("loginForm")
-  .addEventListener("submit", function (event) {
-
-    event.preventDefault();
-
-
-    const loginId =
-      document.getElementById("login_id").value.trim();
-
-    const loginPassword =
-      document.getElementById("login_password").value;
-
-
-    const foundStudent = studentDatabase.find(student => {
-
-      const idMatch =
-        student.student_id.toLowerCase() ===
-        loginId.toLowerCase();
-
-      const emailMatch =
-        student.email.toLowerCase() ===
-        loginId.toLowerCase();
-
-      return (
-        (idMatch || emailMatch) &&
-        student.password === loginPassword
-      );
-
-    });
-
-
-    if (foundStudent) {
-
-      // Show profile information
-      document.getElementById("profId").textContent =
-        foundStudent.student_id;
-
-      document.getElementById("profName").textContent =
-        foundStudent.name;
-
-      document.getElementById("profEmail").textContent =
-        foundStudent.email;
-
-      document.getElementById("profProgram").textContent =
-        foundStudent.program;
-
-      document.getElementById("profGpa").textContent =
-        foundStudent.gpa;
-
-
-      // Hide login form
-      document
-        .getElementById("loginForm")
-        .classList.add("hidden");
-
-
-      // Show profile
-      document
-        .getElementById("loginProfileCard")
-        .classList.remove("hidden");
-
-
-      alert("Login Successful!");
-
-    } else {
-
-      alert(
-        "Invalid Student ID / Email or Password!"
-      );
-
-    }
-
-  });
-
-
-// ==========================================
-// LOGOUT
-// ==========================================
-
-function logoutStudent() {
-
-  document
-    .getElementById("loginForm")
-    .reset();
-
-
-  document
-    .getElementById("loginForm")
-    .classList.remove("hidden");
-
-
-  document
-    .getElementById("loginProfileCard")
-    .classList.add("hidden");
-
-}
-
-
-// ==========================================
-// DELETE STUDENT
-// ==========================================
-
-function deleteStudent(encodedId) {
-
-  const studentId =
-    decodeURIComponent(encodedId);
-
-
-  const student =
-    studentDatabase.find(
-      s => s.student_id === studentId
-    );
-
-
-  if (!student) {
-
-    alert("Student not found.");
-
-    return;
-
-  }
-
-
-  const confirmDelete = confirm(
-    "Are you sure you want to delete this student?"
-  );
-
-
-  if (!confirmDelete) {
-
-    return;
-
-  }
-
-
-  studentDatabase =
-    studentDatabase.filter(
-      s => s.student_id !== studentId
-    );
-
-
-  saveToDatabase();
-
-  renderTable();
-
-  alert("Student deleted successfully!");
-
-}
-
-
-// ==========================================
-// SEARCH STUDENT
-// ==========================================
-
-document
-  .getElementById("searchInput")
-  .addEventListener("input", function () {
-
-    renderTable(this.value);
-
-  });
-
-
-// ==========================================
-// INITIAL TABLE LOAD
-// ==========================================
-
-renderTable();
+document.addEventListener('DOMContentLoaded',()=>{
+  const b=document.querySelector('.btn');
+  if(b){ b.addEventListener('click',goApp); }
+  // Force goApp after 3 sec if still on login
+  setTimeout(()=>{
+    const lp=document.getElementById('loginPage');
+    if(lp &&!lp.classList.contains('hidden')){ goApp(); }
+  },3000);
+});
+const DB_KEY='future_network_v5_final';let db=JSON.parse(localStorage.getItem(DB_KEY)||'{"olts":[],"clients":[]}');let editId=null;
+function goApp(){document.getElementById('loginPage').classList.add('hidden');document.getElementById('app').classList.remove('hidden');init();}
+setTimeout(()=>{goApp();},3500);
+function tab(n,el){document.querySelectorAll('.navBtn').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');['dash','olt','pon','mt','clients','map','connect','bill'].forEach(t=>document.getElementById('t-'+t)?.classList.add('hidden'));document.getElementById('t-'+n)?.classList.remove('hidden');if(n==='map')setTimeout(initMap,300);}
+function log(m){const e=document.getElementById('sysLog');if(e)e.innerHTML=`<div>[${new Date().toLocaleTimeString()}] ${m}</div>`+e.innerHTML;}
+function saveDB(){localStorage.setItem(DB_KEY,JSON.stringify(db));renderAll();}
+function init(){if(db.clients.length===0){db.clients=[{id:1,name:'Kamal Hossain',pppoe:'kamal@future',olt:'Comilla POP-1',pon:'0/1/2',onuSn:'VSEC12345',optical:'-22.4',oltTx:'2.8',pkg:'20 Mbps',due:'0',lat:23.46,lng:91.18,status:'online',phone:'017xx',pass:'123',vlan:'100',price:'600',addr:'Kandirpar'},{id:2,name:'Rahim Store',pppoe:'rahim@future',olt:'Comilla POP-1',pon:'0/1/5',onuSn:'BDCM54321',optical:'-27.8',oltTx:'3.1',pkg:'30 Mbps',due:'600',lat:23.455,lng:91.19,status:'offline',phone:'018xx',pass:'123',vlan:'100',price:'800',addr:'Race Course'}];db.olts=[{id:1,name:'Comilla POP-1',ip:'192.168.1.10',model:'AUTO',cards:2}];saveDB();}renderAll();log('v5.3 Loaded');}
+function renderAll(){renderClients();renderOLT();renderPON();renderMTLive();updateKPI();}
+function updateKPI(){document.getElementById('kpiClients').innerText=db.clients.length;document.getElementById('kpiOnline').innerText=db.clients.filter(c=>c.status==='online').length;document.getElementById('kpiPower').innerText=db.clients.filter(c=>parseFloat(c.optical)<-27).length;document.getElementById('kpiBill').innerText='৳'+db.clients.reduce((s,c)=>s+(parseInt(c.due)||0),0);}
+function renderOLT(){const tb=document.getElementById('oltTable');tb.innerHTML=db.olts.map(o=>`<tr><td>${o.name}</td><td>${o.ip}</td><td>${o.model}</td><td>${o.cards}</td><td><span class="badge bg">SAFE</span></td><td><button class="navBtn" onclick="delOLT(${o.id})">Del</button></td></tr>`).join('');}
+function addOLT(){const n=document.getElementById('oltName').value,ip=document.getElementById('oltIp').value;db.olts.push({id:Date.now(),name:n,ip:ip,model:'AUTO',cards:2});saveDB();}
+function delOLT(id){db.olts=db.olts.filter(o=>o.id!==id);saveDB();}
+function renderPON(){const tb=document.getElementById('ponTable');let rows=[];db.olts.forEach(olt=>{for(let c=0;c<2;c++){for(let p=0;p<8;p++){const clients=db.clients.filter(x=>x.olt===olt.name&&x.pon===`${c}/${p}`);rows.push(`<tr><td>${olt.name}</td><td>${c}</td><td>${c}/${p}</td><td>3.0 dBm</td><td>Kandirpar</td><td>${clients.length}/64</td><td>${clients.length?'-22 dBm':'-'}</td><td><span class="badge bg">ACTIVE</span></td></tr>`);}});tb.innerHTML=rows.join('');}
+function renderClients(){const tb=document.getElementById('clientTable');const q=(document.getElementById('searchClient')?.value||'').toLowerCase();let list=db.clients.filter(c=>!q||JSON.stringify(c).toLowerCase().includes(q));tb.innerHTML=list.map(c=>`<tr><td>${c.name}</td><td>${c.pppoe}</td><td>${c.olt}/${c.pon}</td><td>${c.onuSn}</td><td style="color:${parseFloat(c.optical)<-27?'#ff2e63':'#00ff88'}">${c.optical}</td><td>${c.oltTx}</td><td>${c.pkg}</td><td>${c.due}</td><td><span class="badge ${c.status==='online'?'bg':'br'}">${c.status}</span></td><td><button class="navBtn" onclick="editClient(${c.id})">EDIT</button></td></tr>`).join('');}
+function openAddClient(){editId=null;document.getElementById('clientModal').style.display='flex';}
+function closeAddClient(){document.getElementById('clientModal').style.display='none';}
+function editClient(id){const c=db.clients.find(x=>x.id===id);editId=id;document.getElementById('f_name').value=c.name;document.getElementById('f_pppoe').value=c.pppoe;document.getElementById('f_olt').value=c.olt;document.getElementById('f_pon').value=c.pon;document.getElementById('f_onuSn').value=c.onuSn;document.getElementById('f_optical').value=c.optical;document.getElementById('clientModal').style.display='flex';}
+function saveClient(){const obj={id:editId||Date.now(),name:document.getElementById('f_name').value,pppoe:document.getElementById('f_pppoe').value,olt:document.getElementById('f_olt').value||'Comilla POP-1',pon:document.getElementById('f_pon').value||'0/1/0',onuSn:document.getElementById('f_onuSn').value,optical:document.getElementById('f_optical').value||'-22.5',oltTx:'3.0',pkg:document.getElementById('f_package').value||'20 Mbps',due:document.getElementById('f_due').value||'0',lat:23.46,lng:91.18,status:'online',phone:'',pass:'',vlan:'',price:'600',addr:''};if(editId){db.clients=db.clients.map(c=>c.id===editId?obj:c);}else{db.clients.push(obj);}saveDB();closeAddClient();}
+function renderMTLive(){const tb=document.getElementById('mtLiveTable');tb.innerHTML=db.clients.map(c=>`<tr><td>${c.pppoe}</td><td>10.10.0.1</td><td>5h</td><td>10/10 Mbps</td><td>${c.pkg}</td><td>${c.optical}</td><td><span class="badge bg">ONLINE</span></td></tr>`).join('');}
+let map,mapInit=false;function initMap(){if(mapInit)return;map=L.map('map').setView([23.46,91.18],13);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);mapInit=true;}
+function saveOLTConnect(){document.getElementById('oltStatus').innerText='OLT: CONNECTED';log('OLT Connected');}
+function saveMTConnect(){document.getElementById('mtStatus').innerText='MT: CONNECTED';log('MT Connected');}
+function connectMT(){saveMTConnect();}
+function exportCSV(){let csv='Name,PPPoE\n'+db.clients.map(c=>`${c.name},${c.pppoe}`).join('\n');let b=new Blob([csv],{type:'text/csv'});let a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='clients.csv';a.click();}
