@@ -3,40 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FUTURE NETWORK NOC v5.2 FINAL</title>
+<title>FUTURE NETWORK NOC v5.3</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="style.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-:root{--bg:#050a14;--card:#0f1a2e;--b:#1e3a5f;--g:#00ff88;--r:#ff2e63;--bl:#00d4ff;--y:#ffcc00;--t:#e2e8f0;--m:#94a3b8}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:monospace;background:var(--bg);color:var(--t)}
-#loginPage{position:fixed;inset:0;z-index:9999;background:radial-gradient(circle at 20% 20%,#0f2a4a 0%,#050a14 70%);display:flex;align-items:center;justify-content:center}
-.loginBox{background:#12243f;border:1px solid var(--b);border-radius:20px;padding:35px;width:95%;max-width:400px}
-.inp{width:100%;background:#0a152a;border:1px solid var(--b);border-radius:10px;padding:13px;color:#fff;margin-bottom:12px}
-.btn{width:100%;background:linear-gradient(90deg,var(--bl),var(--g));border:none;border-radius:10px;padding:13px;color:#000;font-weight:800;cursor:pointer}
-.topbar{height:58px;background:#0f1a2e;border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;padding:0 15px;position:sticky;top:0;z-index:100}
-.nav{display:flex;gap:5px;overflow:auto;padding:8px 12px;background:#0a152a;border-bottom:1px solid var(--b);position:sticky;top:58px;z-index:90}
-.navBtn{white-space:nowrap;padding:8px 12px;border-radius:8px;border:1px solid var(--b);background:#0f1a2e;color:var(--m);font-size:10px;cursor:pointer}
-.navBtn.active{border-color:var(--bl);color:#fff;background:#00d4ff22}
-.main{padding:12px;max-width:1400px;margin:0 auto}
-.grid{display:grid;gap:10px}
-.g4{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
-.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-.card{background:#0f1a2e;border:1px solid var(--b);border-radius:14px;padding:14px}
-.kTitle{font-size:10px;color:var(--m);margin-bottom:5px}
-.kVal{font-size:22px;font-weight:800}
-.badge{font-size:10px;padding:3px 7px;border-radius:20px;border:1px solid}
-.bg{background:rgba(0,255,136,0.1);border-color:var(--g);color:var(--g)}
-.br{background:rgba(255,46,99,0.1);border-color:var(--r);color:var(--r)}
-.tableWrap{overflow:auto;border-radius:10px;border:1px solid var(--b)}
-table{width:100%;border-collapse:collapse;font-size:11px;min-width:650px}
-th{background:#0a152a;color:var(--m);padding:8px 10px;text-align:left;font-size:9px}
-td{padding:8px 10px;border-top:1px solid #1e3a5f66}
-.iSm{background:#0a152a;border:1px solid var(--b);border-radius:6px;padding:8px;color:#fff;width:100%;font-size:11px}
-#map{height:500px;border-radius:14px;border:1px solid var(--b)}
-.hidden{display:none!important}
-</style>
 </head>
 <body>
-<div id="loginPage"><div class="loginBox"><h1 style="text-align:center;color:var(--bl)">FUTURE NETWORK</h1><p style="color:var(--m);text-align:center;font-size:11px;margin:8px 0 20px">NOC v5.2 FINAL FIXED // AUTO LOGIN</p><input id="u" class="inp" value="Admin"><input id="p" type="password" class="inp" value="@dmin0000"><button class="btn" id="loginBtn" type="button" onclick="goApp()">SECURE LOGIN - TAP TO ENTER</button><p style="color:var(--g);font-size:9px;text-align:center;margin-top:12px">✓ Click করলেই ঢুকে যাবে - No Password Check</p><p style="color:var(--m);font-size:8px;text-align:center;margin-top:6px">Auto login in 3 sec if not clicked</p><div id="loginErr" style="color:var(--r);font-size:10px;margin-top:10px;text-align:center"></div></div></div>
+<div id="loginPage"><div class="loginBox"><h1>FUTURE NETWORK</h1><p>NOC v5.3 FINAL // 3 FILE</p><input id="u" class="inp" value="Admin"><input id="p" type="password" class="inp" value="@dmin0000"><button class="btn" onclick="goApp()">TAP TO ENTER - AUTO LOGIN</button><p style="color:#00ff88;font-size:10px;margin-top:10px;text-align:center">Click করলেই ঢুকে যাবে + 3 sec Auto Login</p></div></div>
+<div id="app" class="hidden">
+<div class="topbar"><div>FUTURE <span style="color:#00ff88">NETWORK</span> v5.3</div><div style="display:flex;gap:8px"><span id="oltStatus" class="badge bg">OLT:READY</span><span id="mtStatus" class="badge br">MT:READY</span><button class="navBtn" onclick="location.reload()">LOGOUT</button></div></div>
+<div class="nav"><button class="navBtn active" onclick="tab('dash',this)">DASHBOARD</button><button class="navBtn" onclick="tab('olt',this)">OLT</button><button class="navBtn" onclick="tab('pon',this)">PON</button><button class="navBtn" onclick="tab('mt',this)">MIKROTIK</button><button class="navBtn" onclick="tab('clients',this)">CLIENTS</button><button class="navBtn" onclick="tab('map',this)">MAP</button><button class="navBtn" onclick="tab('connect',this)">CONNECT</button><button class="navBtn" onclick="tab('bill',this)">BILL</button></div>
+<div class="main">
+<div id="t-dash" class="grid"><div class="grid g4"><div class="card"><div class="kTitle">TOTAL CLIENTS</div><div class="kVal" id="kpiClients">0</div></div><div class="card"><div class="kTitle">ONLINE</div><div class="kVal" id="kpiOnline" style="color:#00ff88">0</div></div><div class="card"><div class="kTitle">PON ALERT</div><div class="kVal" id="kpiPower" style="color:#ffcc00">0</div></div><div class="card"><div class="kTitle">DUE</div><div class="kVal" id="kpiBill">0</div></div></div><div class="grid g2"><div class="card"><div class="kTitle">TRAFFIC</div><canvas id="trafficChart" height="110"></canvas></div><div class="card"><div class="kTitle">PON LOAD</div><canvas id="ponChart" height="110"></canvas></div></div><div class="card"><div class="kTitle">LOG</div><div id="sysLog"></div></div></div>
+<div id="t-olt" class="grid hidden"><div class="card"><div class="kTitle">OLT LIST</div><div style="display:flex;gap:6px;margin-top:8px"><input id="oltName" class="iSm" placeholder="OLT Name"><input id="oltIp" class="iSm" placeholder="IP"><button class="navBtn" onclick="addOLT()">ADD OLT</button></div><div class="tableWrap" style="margin-top:10px"><table><thead><tr><th>OLT</th><th>IP</th><th>MODEL</th><th>CARDS</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody id="oltTable"></tbody></table></div></div></div>
+<div id="t-pon" class="grid hidden"><div class="card"><div class="kTitle">PON MODULES A-Z</div><div class="tableWrap" style="margin-top:10px"><table><thead><tr><th>OLT</th><th>SLOT</th><th>PON</th><th>TX</th><th>DIR</th><th>CLIENTS</th><th>RX AVG</th><th>STATUS</th></tr></thead><tbody id="ponTable"></tbody></table></div></div></div>
+<div id="t-mt" class="grid hidden"><div class="card"><div class="kTitle">MIKROTIK LIVE</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px;margin-top:8px"><input id="mtIp" class="iSm" placeholder="MT IP"><input id="mtUser" class="iSm" placeholder="User"><input id="mtPass" type="password" class="iSm" placeholder="Pass"><button class="btn" style="padding:8px" onclick="connectMT()">CONNECT</button></div><div class="tableWrap" style="margin-top:10px"><table><thead><tr><th>USER</th><th>IP</th><th>UPTIME</th><th>TX/RX</th><th>PKG</th><th>OPTICAL</th><th>STATUS</th></tr></thead><tbody id="mtLiveTable"></tbody></table></div></div></div>
+<div id="t-clients" class="grid hidden"><div class="card"><div style="display:flex;justify-content:space-between"><div class="kTitle">CLIENTS PERMANENT DB</div><button class="navBtn" onclick="openAddClient()">+ ADD CLIENT</button></div><div style="display:flex;gap:6px;margin-top:8px"><input id="searchClient" class="iSm" placeholder="Search" oninput="renderClients()"><select id="filterStatus" class="iSm" style="max-width:120px" onchange="renderClients()"><option value="all">All</option><option value="online">Online</option><option value="offline">Offline</option></select></div><div class="tableWrap" style="margin-top:10px"><table><thead><tr><th>NAME</th><th>PPPoE</th><th>OLT/PON</th><th>ONU SN</th><th>RX</th><th>TX</th><th>PKG</th><th>DUE</th><th>STATUS</th><th>EDIT</th></tr></thead><tbody id="clientTable"></tbody></table></div></div></div>
+<div id="t-map" class="grid hidden"><div class="card"><div class="kTitle">REAL FIBER MAP</div><div id="map" style="margin-top:10px"></div></div></div>
+<div id="t-connect" class="grid hidden"><div class="grid g2"><div class="card"><div class="kTitle">OLT CONNECT</div><div style="display:grid;gap:6px"><select id="cOltType" class="iSm"><option>AUTO DETECT</option><option>V-SOL GPON</option><option>BDCOM</option><option>C-DATA</option></select><input id="cOltIp" class="iSm" placeholder="OLT IP"><input id="cOltUser" class="iSm" placeholder="User"><input id="cOltPass" type="password" class="iSm" placeholder="Pass"><button class="btn" onclick="saveOLTConnect()">SAVE & TEST</button><div id="cOltLog"></div></div></div><div class="card"><div class="kTitle">MIKROTIK CONNECT</div><div style="display:grid;gap:6px"><input id="cMtIp" class="iSm" placeholder="MT IP"><input id="cMtUser" class="iSm" placeholder="User"><input id="cMtPass" type="password" class="iSm" placeholder="Pass"><button class="btn" onclick="saveMTConnect()">SAVE & TEST</button><div id="cMtLog"></div></div></div></div></div>
+<div id="t-bill" class="grid hidden"><div class="grid g2"><div class="card"><div class="kTitle">BILLING</div><canvas id="billChart" height="120"></canvas></div><div class="card"><div class="kTitle">EXPORT</div><button class="navBtn" style="margin-top:10px" onclick="exportCSV()">EXPORT CSV</button></div></div></div>
+</div>
+</div>
+<div id="clientModal" style="display:none"><div class="card" style="width:95%;max-width:540px;margin:5% auto"><div style="display:flex;justify-content:space-between"><div class="kTitle">CLIENT ADD / EDIT</div><button class="navBtn" onclick="closeAddClient()">X</button></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px"><input id="f_name" class="iSm" placeholder="Name *"><input id="f_phone" class="iSm" placeholder="Phone"><input id="f_pppoe" class="iSm" placeholder="PPPoE *"><input id="f_pppoePass" class="iSm" placeholder="Pass"><input id="f_olt" class="iSm" placeholder="OLT"><input id="f_pon" class="iSm" placeholder="PON"><input id="f_onuSn" class="iSm" placeholder="ONU SN"><input id="f_optical" class="iSm" placeholder="RX"><input id="f_oltTx" class="iSm" placeholder="TX"><input id="f_vlan" class="iSm" placeholder="VLAN"><input id="f_package" class="iSm" placeholder="Package"><input id="f_price" class="iSm" placeholder="Price"><input id="f_due" class="iSm" placeholder="Due"><input id="f_address" class="iSm" placeholder="Address" style="grid-column:1/3"><input id="f_lat" class="iSm" placeholder="Lat"><input id="f_lng" class="iSm" placeholder="Lng"></div><button class="btn" style="margin-top:10px" onclick="saveClient()">SAVE PERMANENTLY</button></div></div>
+<script src="app.js"></script>
+</body>
+</html>
