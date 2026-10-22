@@ -1,0 +1,59 @@
+/* ROYAL FOOD VILLA - MAIN JS - BALAY 24150892008 */
+const FALLBACK="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500";
+let defaultFoods=[
+{n:"Shingara (2pcs)",p:20,cat:"Street",img:"https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&w=500",badge:"STREET",desc:"Garam Shingara",ing:"Aloo, Moyda"},
+{n:"Samosa",p:30,cat:"Street",img:"https://images.pexels.com/photos/5409015/pexels-photo-5409015.jpeg?auto=compress&w=500",badge:"STREET",desc:"Veg Samosa",ing:"Potato"},
+{n:"Fuchka (10pcs)",p:100,cat:"Street",img:"https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg?auto=compress&w=500",badge:"POPULAR",desc:"Fuchka with tetul pani",ing:"Suji, Tetul"},
+{n:"Chotpoti",p:80,cat:"Street",img:"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500",badge:"POPULAR",desc:"Chotpoti with dim",ing:"Chola, Aloo"},
+{n:"Luchi Alur Dom",p:90,cat:"Street",img:"https://images.unsplash.com/photo-1505253758473-96b7015fcd40?w=500",badge:"BREAKFAST",desc:"Luchi with Alur Dom",ing:"Moyda, Aloo"},
+{n:"Paratha Dal",p:50,cat:"Street",img:"https://images.pexels.com/photos/12737656/pexels-photo-12737656.jpeg?auto=compress&w=500",badge:"BREAKFAST",desc:"Paratha Dal",ing:"Atta, Dal"},
+{n:"Chicken Biryani",p:180,cat:"Biryani",img:"https://images.pexels.com/photos/12737656/pexels-photo-12737656.jpeg?auto=compress&w=500",badge:"BIRYANI",desc:"Chicken Biryani with egg",ing:"Rice, Chicken"},
+{n:"Beef Biryani",p:220,cat:"Biryani",img:"https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500",badge:"BIRYANI",desc:"Beef Biryani",ing:"Beef, Rice"},
+{n:"Kacchi Biryani",p:350,cat:"Biryani",img:"https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500",badge:"PREMIUM",desc:"Mutton Kacchi",ing:"Mutton, Aloo"},
+{n:"Morog Polao",p:200,cat:"Biryani",img:"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500",badge:"SPECIAL",desc:"Morog Polao",ing:"Chicken, Polao"},
+{n:"Hilsa Bhapa",p:450,cat:"Fish",img:"https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500",badge:"FISH",desc:"Shorshe Ilish",ing:"Ilish, Shorisha"},
+{n:"Rui Curry",p:180,cat:"Fish",img:"https://images.unsplash.com/photo-1534939561121-4a00b8928b80?w=500",badge:"FISH",desc:"Rui Macher Jhol",ing:"Rui, Aloo"},
+{n:"Grilled Chicken",p:220,cat:"Chicken",img:"https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?auto=compress&w=500",badge:"CHICKEN",desc:"Grilled Chicken",ing:"Chicken, Lemon"},
+{n:"Chicken Tikka",p:280,cat:"Chicken",img:"https://images.pexels.com/photos/2233729/pexels-photo-2233729.jpeg?auto=compress&w=500",badge:"CHICKEN",desc:"Tikka Kebab",ing:"Chicken, Doi"},
+{n:"Kala Bhuna",p:320,cat:"Chicken",img:"https://images.unsplash.com/photo-1505253758473-96b7015fcd40?w=500",badge:"BEEF",desc:"Kala Bhuna",ing:"Beef"},
+{n:"Fried Rice Combo",p:250,cat:"Chicken",img:"https://images.unsplash.com/photo-1603133872875-ca2a98a0a6a2?w=500",badge:"COMBO",desc:"Fried Rice + Chicken",ing:"Rice, Chicken"},
+{n:"Faluda",p:120,cat:"Dessert",img:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=500",badge:"DESSERT",desc:"Special Faluda",ing:"Milk, Jelly"},
+{n:"Borhani",p:40,cat:"Dessert",img:"https://images.unsplash.com/photo-1544148103-0778bf10d330?w=500",badge:"DRINKS",desc:"Borhani",ing:"Doi, Pudina"},
+];
+let foods=JSON.parse(localStorage.getItem('royal_foods_v8')||'null')||defaultFoods;
+let cart=JSON.parse(localStorage.getItem('royal_cart')||'[]');
+let orders=JSON.parse(localStorage.getItem('royal_orders')||'[]');
+let isAdmin=JSON.parse(localStorage.getItem('royal_admin_v8')||'false');
+let currentFilter="All";let editIndex=-1;let searchTerm="";
+
+function saveAll(){localStorage.setItem('royal_foods_v8',JSON.stringify(foods));localStorage.setItem('royal_cart',JSON.stringify(cart));localStorage.setItem('royal_orders',JSON.stringify(orders));localStorage.setItem('royal_admin_v8',JSON.stringify(isAdmin));updateUI();}
+function openAdminLogin(){if(isAdmin){toggleAdmin();return;}document.getElementById('adminLoginModal').classList.remove('hidden');document.getElementById('adminLoginModal').classList.add('flex');}
+function doAdminLogin(){let u=document.getElementById('adminUser').value,p=document.getElementById('adminPass').value;if(u==='admin'&&p==='balay2026'){isAdmin=true;saveAll();document.getElementById('adminStatus').innerText='Admin: ON';document.getElementById('adminStatus').className='bg-[#FFC93C] text-black px-3 py-1.5 rounded-full text-[10px] font-bold';closeAll();alert('Admin Login Success!');renderMenu();updateUI();}else{document.getElementById('loginMsg').innerText='Wrong username or password!';}}
+function toggleAdmin(){if(isAdmin){isAdmin=false;saveAll();document.getElementById('adminStatus').innerText='Admin: Locked';document.getElementById('adminStatus').className='bg-zinc-900 border border-zinc-700 px-3 py-1.5 rounded-full text-[10px] text-zinc-400';renderMenu();updateUI();}}
+function renderFilters(){let cats=["All","Street","Biryani","Fish","Chicken","Dessert"];document.getElementById('filterNav').innerHTML=cats.map(c=>`<button class="filter ${currentFilter==c?'active':''}" onclick="currentFilter='${c}';renderFilters();renderMenu()">${c}</button>`).join('');}
+function renderMenu(){
+ let list=foods.filter(f=>{let matchCat=currentFilter=="All"||f.cat==currentFilter;let matchSearch=f.n.toLowerCase().includes(searchTerm.toLowerCase())||f.desc.toLowerCase().includes(searchTerm.toLowerCase());return matchCat&&matchSearch;});
+ document.getElementById('menuGrid').innerHTML=list.map(f=>{let idx=foods.indexOf(f);return `<div class="bg-[#151515] border border-zinc-800 rounded-[18px] overflow-hidden hover:border-[#FFC93C] transition"><img src="${f.img}" onerror="this.src='${FALLBACK}'" onclick="openFood(${idx})" class="w-full h-[180px] object-cover cursor-pointer bg-zinc-900"><div class="p-3"><div class="flex justify-between"><span class="bg-[#FFC93C] text-black px-2 py-0.5 rounded-full text-[9px] font-bold">${f.badge}</span><span class="text-[9px] text-zinc-600">${f.cat}</span></div><h4 class="mt-1.5 text-[13px] font-bold">${f.n}</h4><p class="text-zinc-500 text-[10px] mt-1">${f.desc}</p><div class="flex justify-between items-center mt-2"><span class="text-[#FFC93C] font-bold text-[13px]">BDT ${f.p}</span><div class="flex gap-1"><button onclick="addToCart(${idx})" class="bg-[#FFC93C] text-black px-2.5 py-1 rounded-full text-[10px] font-bold">Add</button>${isAdmin?`<button onclick="openEdit(${idx})" class="bg-zinc-800 border border-zinc-700 px-2 py-1 rounded-full text-[10px]">✏️</button>`:''}</div></div></div></div>`;}).join('');
+}
+function updateUI(){
+ document.getElementById('cartCount').innerText=cart.reduce((s,x)=>s+x.qty,0);
+ let total=cart.reduce((s,x)=>s+x.p*x.qty,0);
+ document.getElementById('cartTotal').innerText='BDT '+total;
+ document.getElementById('cartItems').innerHTML=cart.length?cart.map((c,i)=>`<div class="flex gap-2 bg-zinc-900 p-2 rounded-xl mb-2"><img src="${c.img}" onerror="this.src='${FALLBACK}'" class="w-11 h-11 rounded-lg object-cover"><div class="flex-1"><div class="text-[11px] font-bold">${c.n}</div><div class="text-[10px] text-[#FFC93C]">BDT ${c.p} x ${c.qty}</div></div><div class="flex items-center gap-1"><button onclick="chg(${i},-1)" class="w-6 h-6 rounded-full border border-zinc-700 bg-zinc-800">-</button><span class="text-[11px]">${c.qty}</span><button onclick="chg(${i},1)" class="w-6 h-6 rounded-full border border-zinc-700 bg-zinc-800">+</button><button onclick="del(${i})" class="ml-1 bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded text-[10px]">✕</button></div></div>`).join(''):`<p class="text-center text-zinc-600 py-4 text-[11px]">Cart empty</p>`;
+ document.getElementById('orderHistory').innerHTML=orders.slice(0,5).map(o=>`<div class="bg-zinc-900 p-2 rounded-lg mb-1 text-[10px] text-zinc-500">ID: ${o.orderId} • BDT ${o.total} • ${o.date}</div>`).join('')||'<span class="text-zinc-600 text-[10px]">No orders</span>';
+ document.getElementById('dOrders').innerText=orders.length;
+ document.getElementById('dMenu').innerText=foods.length;
+ if(isAdmin){document.getElementById('dRevenue').innerText='BDT '+(orders.reduce((s,o)=>s+o.total,0)+ (orders.length*40));document.getElementById('adminStatus').innerText='Admin: ON';document.getElementById('adminStatus').className='bg-[#FFC93C] text-black px-3 py-1.5 rounded-full text-[10px] font-bold';}
+}
+function chg(i,d){cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);saveAll();}
+function del(i){cart.splice(i,1);saveAll();}
+function addToCart(i){let f=foods[i];let ex=cart.find(x=>x.n==f.n);if(ex)ex.qty++;else cart.push({...f,qty:1});saveAll();openCart();}
+function openCart(){document.getElementById('cartModal').style.right='0';document.getElementById('overlay').classList.remove('hidden');}
+function closeAll(){document.getElementById('cartModal').style.right='-100%';document.getElementById('overlay').classList.add('hidden');document.querySelectorAll('#adminLoginModal, #checkoutModal, #invoiceModal').forEach(m=>{m.classList.add('hidden');m.classList.remove('flex');});document.getElementById('foodModal').classList.add('hidden');document.getElementById('foodModal').classList.remove('flex');}
+function openDashboard(){document.getElementById('dashboard').scrollIntoView({behavior:'smooth'});}
+function openCheckout(){if(!cart.length){alert('Cart empty!');return;}let subtotal=cart.reduce((s,x)=>s+x.p*x.qty,0);document.getElementById('chkSubtotal').innerText='BDT '+subtotal;document.getElementById('chkTotal').innerText='BDT '+(subtotal+40);document.getElementById('checkoutModal').classList.remove('hidden');document.getElementById('checkoutModal').classList.add('flex');}
+function confirmOrder(){let name=document.getElementById('cName').value,phone=document.getElementById('cPhone').value,addr=document.getElementById('cAddress').value,pay=document.getElementById('cPayment').value;if(!name||!phone||!addr){alert('Please fill Name, Phone, Address');return;}let subtotal=cart.reduce((s,x)=>s+x.p*x.qty,0);let total=subtotal+40;let orderId='ROYAL-'+Math.floor(10000+Math.random()*90000);let order={orderId,items:[...cart],subtotal,delivery:40,total,customer:name,phone,address:addr,payment:pay,date:new Date().toLocaleString()};orders.unshift(order);cart=[];saveAll();closeAll();document.getElementById('invOrderId').innerText=orderId;document.getElementById('invCustomer').innerText=name;document.getElementById('invPhone').innerText=phone;document.getElementById('invAddress').innerText=addr;document.getElementById('invPayment').innerText=pay;document.getElementById('invDate').innerText=order.date;document.getElementById('invItems').innerHTML=order.items.map(it=>`<div class="flex justify-between py-1"><span>${it.n} x ${it.qty}</span><span>BDT ${it.p*it.qty}</span></div>`).join('')+`<div class="flex justify-between py-1 border-t border-dashed mt-2"><span>Delivery</span><span>BDT 40</span></div>`;document.getElementById('invTotal').innerText='BDT '+total;document.getElementById('invoiceModal').classList.remove('hidden');document.getElementById('invoiceModal').classList.add('flex');}
+function openFood(i){let f=foods[i];document.getElementById('fImg').src=f.img;document.getElementById('fName').innerText=f.n;document.getElementById('fBadge').innerText=f.badge;document.getElementById('fDesc').innerText=f.desc;document.getElementById('fIng').innerText='Ingredients: '+f.ing;document.getElementById('fPrice').innerText='BDT '+f.p;document.getElementById('fAdd').onclick=()=>{addToCart(i);closeAll();};document.getElementById('foodModal').classList.remove('hidden');document.getElementById('foodModal').classList.add('flex');}
+document.getElementById('searchInput')?.addEventListener('input',e=>{searchTerm=e.target.value;renderMenu();});
+document.getElementById('searchInputMobile')?.addEventListener('input',e=>{searchTerm=e.target.value;renderMenu();});
+renderFilters();renderMenu();updateUI();
