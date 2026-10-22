@@ -1,32 +1,903 @@
-:root{--bg:#050a14;--card:#0f1a2e;--b:#1e3a5f;--g:#00ff88;--r:#ff2e63;--bl:#00d4ff;--y:#ffcc00;--t:#e2e8f0;--m:#94a3b8}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:monospace;background:var(--bg);color:var(--t)}
-#loginPage{position:fixed;inset:0;z-index:9999;background:radial-gradient(circle at 20% 20%,#0f2a4a 0%,#050a14 70%);display:flex;align-items:center;justify-content:center}
-.loginBox{background:#12243f;border:1px solid var(--b);border-radius:20px;padding:35px;width:95%;max-width:400px;text-align:center}
-.loginBox h1{color:var(--bl)}
-.loginBox p{color:var(--m);font-size:11px;margin:8px 0 20px}
-.inp{width:100%;background:#0a152a;border:1px solid var(--b);border-radius:10px;padding:13px;color:#fff;margin-bottom:12px}
-.btn{width:100%;background:linear-gradient(90deg,var(--bl),var(--g));border:none;border-radius:10px;padding:13px;color:#000;font-weight:800;cursor:pointer}
-.topbar{height:58px;background:#0f1a2e;border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;padding:0 15px;position:sticky;top:0;z-index:100}
-.nav{display:flex;gap:5px;overflow:auto;padding:8px 12px;background:#0a152a;border-bottom:1px solid var(--b);position:sticky;top:58px;z-index:90}
-.navBtn{white-space:nowrap;padding:8px 12px;border-radius:8px;border:1px solid var(--b);background:#0f1a2e;color:var(--m);font-size:10px;cursor:pointer}
-.navBtn.active{border-color:var(--bl);color:#fff;background:#00d4ff22}
-.main{padding:12px;max-width:1400px;margin:0 auto}
-.grid{display:grid;gap:10px}
-.g4{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
-.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-.card{background:#0f1a2e;border:1px solid var(--b);border-radius:14px;padding:14px}
-.kTitle{font-size:10px;color:var(--m);margin-bottom:5px}
-.kVal{font-size:22px;font-weight:800}
-.badge{font-size:10px;padding:3px 7px;border-radius:20px;border:1px solid}
-.bg{background:rgba(0,255,136,0.1);border-color:var(--g);color:var(--g)}
-.br{background:rgba(255,46,99,0.1);border-color:var(--r);color:var(--r)}
-.tableWrap{overflow:auto;border-radius:10px;border:1px solid var(--b)}
-table{width:100%;border-collapse:collapse;font-size:11px;min-width:650px}
-th{background:#0a152a;color:var(--m);padding:8px 10px;text-align:left;font-size:9px}
-td{padding:8px 10px;border-top:1px solid #1e3a5f66}
-.iSm{background:#0a152a;border:1px solid var(--b);border-radius:6px;padding:8px;color:#fff;width:100%;font-size:11px}
-#map{height:500px;border-radius:14px;border:1px solid var(--b)}
-.hidden{display:none!important}
-#sysLog{font-size:10px;max-height:120px;overflow:auto;color:var(--m)}
-#clientModal{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:500;display:flex;align-items:center;justify-content:center;padding:12px}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;   
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    font-family: 'Lato', sans-serif;       
+    background: #faf6f1;                   
+    color: #2f2a24;                    
+    line-height: 1.7;                     
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    color: #2f2a24;
+    font-weight: 700;
+}
+
+
+h2 {
+    font-size: 2.5rem;                     
+    text-align: center;                   
+    margin-bottom: 3rem;            
+    padding-bottom: 1.5rem;               
+    position: relative;                    
+}
+
+
+h2::after {
+    content: '';                           
+    position: absolute;                  
+    bottom: 0;                          
+    left: 50%;                         
+    transform: translateX(-50%);          
+    width: 80px;                          
+    height: 3px;                        
+    background: #b27b38;                 
+    border-radius: 2px;       
+}
+
+
+p {
+    font-size: 1.05rem;
+    color: #555;
+    line-height: 1.8;
+}
+
+
+
+
+.btn {
+    font-weight: 700;                      
+    text-transform: uppercase;             
+    letter-spacing: 1px;                 
+    padding: 0.9rem 2rem;                  
+    border: none;                         
+    border-radius: 999px;                
+    cursor: pointer;                      
+    display: inline-block;              
+    transition: all 0.3s ease;            
+    text-decoration: none;                 
+}
+
+.btn-gold {
+    background: #b27b38;                   
+    color: white;               
+    box-shadow: 0 4px 15px rgba(178, 123, 56, 0.3);  
+}
+
+/* Hover effect: lift up slightly */
+.btn-gold:hover {
+    background: #d9a35f;            
+    transform: translateY(-3px);       
+    box-shadow: 0 8px 25px rgba(178, 123, 56, 0.4);  
+}
+
+
+.btn-outline-gold {
+    background: transparent;         
+    border: 2px solid #b27b38;       
+    color: #b27b38;                   
+}
+
+
+.btn-outline-gold:hover {
+    background: #b27b38;           
+    color: white;                   
+    transform: translateY(-3px);        
+}
+
+
+
+.navbar {
+    background: white !important;          
+    padding: 1.2rem 0;                   
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);  
+    position: sticky;                      
+    top: 0;
+    z-index: 1000;                         
+}
+
+.navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #b27b38 !important;          
+    letter-spacing: 2px;
+    text-decoration: none;
+}
+
+
+.nav-link {
+    font-weight: 600;
+    color: #2f2a24 !important;          
+    padding: 0.5rem 1rem !important;
+    border-radius: 999px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    color: #b27b38 !important;              
+    background: rgba(218, 165, 32, 0.1);    
+}
+
+
+
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                url('Home.jpg') center/cover no-repeat;
+
+    min-height: 90vh;                     
+    display: flex;                       
+    align-items: center;         
+    justify-content: center;            
+    text-align: center;         
+    color: white;                
+}
+
+
+.hero-content {
+    max-width: 800px;            
+    padding: 0 1rem;
+}
+
+
+.hero-chip {
+    display: inline-block;
+    background: rgba(218, 165, 32, 0.15);   
+    border: 1px solid rgba(218, 165, 32, 0.3);
+    color: #f6eee6;          
+    padding: 0.5rem 1.2rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    text-transform: uppercase;    
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+}
+
+
+.hero h1 {
+    font-size: 4.5rem;                 
+    font-weight: 900;
+    color: #f8e1b8;      
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+}
+
+
+.hero-tagline {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1rem;
+}
+
+.hero-description {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 650px;
+    margin: 0 auto 2rem;
+    line-height: 1.8;
+}
+
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;                
+}
+.hero-highlights {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.hero-highlight {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 1rem 2rem;
+    min-width: 130px;
+}
+
+.hero-highlight strong {
+    display: block;                       
+    font-size: 1.8rem;
+    margin-bottom: 0.3rem;
+}
+
+.hero-highlight span {
+    display: block;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+
+
+section {
+    padding: 5rem 0;
+}
+
+
+.light-bg {
+    background: white;              
+}
+
+.cream-bg {
+    background: #f5ece3;              
+}
+
+.dark-bg {
+    background: #2f2a24;         
+    color: white;
+}
+
+
+.dark-bg h2,
+.dark-bg h3 {
+    color: white;
+}
+
+
+.dark-bg h2::after {
+    background: #d9a35f;
+}
+
+
+.container-xl {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.about-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-image img {
+    width: 100%;
+    max-width: 540px;
+    height: auto;
+    border-radius: 20px;
+    object-fit: cover;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+}
+
+.about-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;     
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.feature-item {
+    padding: 1.5rem;
+    background: #f9f4ee;           
+    border-radius: 10px;
+    border-left: 4px solid #b27b38;      
+}
+
+.feature-item h4 {
+    color: #b27b38;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+
+
+.chef-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 2rem;
+}
+
+
+.chef-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.chef-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* STEP 3: Chef photo */
+.chef-image {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+}
+
+
+.chef-info {
+    padding: 2rem 1.5rem;
+}
+
+.chef-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+}
+
+.chef-role {
+    color: #b27b38;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.chef-bio {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.7;
+}
+
+
+
+
+
+.menu-categories {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+/* STEP 2: Each menu category box */
+.menu-category {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* STEP 3: Colored header bar (e.g. "Starters") */
+.menu-category-header {
+    background: #b27b38;                    /* gold background */
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+/* STEP 4: Container for the menu items */
+.menu-items {
+    padding: 1.5rem;
+}
+
+/* STEP 5: Each individual menu item */
+.menu-item {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+/* Remove border from the last item in each category */
+.menu-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* STEP 6: Flex layout for name (left) and price (right) */
+.menu-item-header {
+    display: flex;
+    justify-content: space-between;         /* pushes name left, price right */
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.menu-item-name {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.menu-item-price {
+    color: #b27b38;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.menu-item-desc {
+    color: #777;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+/* STEP 7: "Signature" badge (small gold label) */
+.badge-signature {
+    display: inline-block;
+    background: #b27b38;
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+}
+
+
+
+
+
+/* ============================================================
+   🖼️  SECTION 9: GALLERY SECTION
+   ============================================================ */
+
+/* STEP 1: Grid of food/dining images */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);  /* 4 columns */
+    gap: 1.5rem;
+}
+
+/* STEP 2: Each gallery item (image + overlay) */
+.gallery-item {
+    position: relative;                     /* needed for overlay positioning */
+    border-radius: 12px;
+    overflow: hidden;
+    height: 250px;
+    cursor: pointer;
+}
+
+/* STEP 3: The image itself */
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+/* Zoom effect on hover */
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+/* STEP 4: Dark overlay that appears on hover */
+.gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);         /* semi-transparent black */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;                              /* hidden by default */
+    transition: opacity 0.3s ease;
+}
+
+/* Show overlay on hover */
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+/* STEP 5: Text that appears on the overlay */
+.gallery-overlay-text {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    padding: 0 1rem;
+}
+
+
+
+
+
+/* ============================================================
+   ⭐  SECTION 10: REVIEWS SECTION (Guest Reviews)
+   ============================================================ */
+
+/* STEP 1: Grid of review cards */
+.reviews-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);  /* 3 columns */
+    gap: 2rem;
+}
+
+/* STEP 2: Each review card */
+.review-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border-top: 4px solid #b27b38;          /* gold top border */
+    position: relative;                     /* for quote positioning */
+}
+
+/* STEP 3: The large quote mark (" ) */
+.review-quote {
+    font-size: 3rem;
+    color: #b27b38;                         /* gold */
+    position: absolute;
+    top: 0.5rem;
+    right: 1.5rem;
+    opacity: 0.2;                           /* very faint */
+    font-family: serif;
+    line-height: 1;
+}
+
+/* STEP 4: The review text (italic) */
+.review-text {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+}
+
+/* STEP 5: Author name */
+.review-author {
+    font-weight: 700;
+    color: #2f2a24;
+    margin-bottom: 0.3rem;
+}
+
+/* STEP 6: Star rating */
+.review-rating {
+    color: #d9a35f;                         /* gold stars */
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+
+
+
+
+/* ============================================================
+   📞  SECTION 11: CONTACT SECTION
+   ============================================================ */
+
+/* STEP 1: Subtitle below heading */
+.section-subtitle {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    text-align: center;
+    color: #7a6a5c;
+    font-size: 1rem;
+}
+
+/* STEP 2: Two-column layout: info (left) + form (right) */
+.contact-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;       /* info slightly narrower than form */
+    gap: 2rem;
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+/* STEP 3: Contact info and form share these styles */
+.contact-info,
+.contact-form {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+    padding: 2rem;
+}
+
+/* STEP 4: Each contact info row (location, phone, etc.) */
+.contact-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.contact-item:last-child {
+    margin-bottom: 0;
+}
+
+/* STEP 5: Icon circle */
+.contact-item-icon {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(178, 123, 56, 0.15);   /* light gold background */
+    border-radius: 12px;
+    font-size: 1.2rem;
+    flex-shrink: 0;                         /* prevents icon from shrinking */
+}
+
+/* STEP 6: Text next to the icon */
+.contact-item-text h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+}
+
+.contact-item-text p {
+    margin: 0;
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* STEP 7: Form styling - labels */
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: #2f2a24;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* STEP 8: Form input boxes */
+.form-group input,
+.form-group textarea {
+    width: 100%;                            /* full width of container */
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background: #fcf7f1;
+}
+
+/* STEP 9: When you click on an input (focus state) */
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #b27b38;                  /* gold border */
+    background: white;
+}
+
+/* STEP 10: Message textarea */
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;                       /* user can resize height */
+}
+
+/* STEP 11: Submit button with full width */
+.form-submit {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.05rem;
+}
+
+
+
+
+
+/* ============================================================
+   🦶  SECTION 12: FOOTER
+   ============================================================ */
+
+/* STEP 1: Dark footer background */
+footer {
+    background: #2f2a24;                    /* dark charcoal */
+    color: #f6eee6;                         /* light cream text */
+    padding: 3rem 0 1.5rem;
+    position: relative;
+}
+
+/* STEP 2: Gold line at top of footer */
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #b27b38;                    /* gold line */
+}
+
+/* STEP 3: Three-column footer links */
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* STEP 4: Section headings inside the footer */
+.footer-section h4 {
+    color: #d9a35f;                         /* gold headings */
+    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* STEP 5: Footer links list */
+.footer-section ul {
+    list-style: none;                       /* removes bullet points */
+}
+
+.footer-section ul li {
+    margin-bottom: 0.7rem;
+}
+
+.footer-section ul li a {
+    color: #f6eee6;
+    text-decoration: none;                  /* removes underline */
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #d9a35f;                         /* gold on hover */
+}
+
+/* STEP 6: Brand name in the middle of footer */
+.footer-brand {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.footer-brand h3 {
+    font-size: 1.6rem;
+    color: #d9a35f;
+    margin-bottom: 0.3rem;
+}
+
+.footer-brand p {
+    color: #f6eee6;
+    opacity: 0.7;
+}
+
+/* STEP 7: Bottom copyright bar */
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+}
+
+.footer-bottom p {
+    margin: 0.3rem 0;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+
+
+
+
+/* ============================================================
+   📱  SECTION 13: RESPONSIVE DESIGN (mobile/tablet screens)
+   ============================================================
+   These styles kick in when the screen gets smaller.
+   They rearrange layouts from multi-column to single-column.
+   ============================================================ */
+
+/* ----- Tablets and below (max width 768px) ----- */
+@media (max-width: 768px) {
+
+    /* Reduce heading sizes */
+    h2 {
+        font-size: 2rem;
+    }
+
+    .hero h1 {
+        font-size: 2.8rem;
+    }
+
+    /* About: switch from 2 columns to 1 column */
+    .about-content {
+        grid-template-columns: 1fr;          /* single column */
+        gap: 2rem;
+    }
+
+    .about-image img {
+        max-width: 100%;
+    }
+
+    .about-features {
+        grid-template-columns: 1fr;          /* features stack vertically */
+    }
+
+    /* Chefs: 3 columns → 1 column */
+    .chef-cards {
+        grid-template-columns: 1fr;
+    }
+
+    /* Menu: 3 columns → 1 column */
+    .menu-categories {
+        grid-template-columns: 1fr;
+    }
+
+    /* Gallery: 4 columns → 2 columns */
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Reviews: 3 columns → 1 column */
+    .reviews-container {
+        grid-template-columns: 1fr;
+    }
+
+    /* Contact: 2 columns → 1 column */
+    .contact-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    /* Footer: 3 columns → 1 column (centered text) */
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    /* Hero buttons stack vertically */
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
+/* ----- Mobile phones (max width 576px) ----- */
+@media (max-width: 576px) {
+
+    /* Reduce padding and font sizes further */
+    section {
+        padding: 3rem 0;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+        margin-bottom: 2rem;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    /* Gallery: 2 columns → 1 column */
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-item {
+        height: 200px;
+    }
+
+    /* Chef images slightly shorter */
+    .chef-image {
+        height: 250px;
+    }
+}
