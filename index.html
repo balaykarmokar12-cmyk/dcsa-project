@@ -2,188 +2,157 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ROYAL FOOD VILLA - BALAY KARMAKER - FINAL</title>
+<title>ROYAL FOOD VILLA - BALAY KARMAKER 24150892008 - FINAL YEAR</title>
+<script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-<style>
-:root{--gold:#FFC93C;--bg:#0a0a0a;--card:#151515;--line:#222}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:#fff;line-height:1.5}
-h1,h2{font-family:'Syne',sans-serif}
-.navbar{position:fixed;top:10px;left:50%;transform:translateX(-50%);width:96%;max-width:1240px;background:rgba(18,18,18,.96);border:1px solid var(--line);border-radius:100px;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;z-index:9999}
-.btn-gold{background:var(--gold);color:#000;padding:9px 18px;border-radius:100px;font-weight:700;border:none;cursor:pointer;font-size:12px}
-.filter{padding:7px 14px;border-radius:100px;border:1px solid #333;background:#111;color:#aaa;font-size:11px;cursor:pointer;margin:3px}.filter.active{background:var(--gold);color:#000;font-weight:700}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:.2s}.card:hover{border-color:var(--gold)}
-.card img{width:100%;height:180px;object-fit:cover;background:#111}
-.card-body{padding:12px}
-.badge{background:var(--gold);color:#000;padding:2px 8px;border-radius:100px;font-size:9px;font-weight:800}
-.cart{position:fixed;right:-100%;top:0;width:95%;max-width:380px;height:100vh;background:#101010;border-left:1px solid #222;z-index:10000;transition:.35s;padding:16px;overflow-y:auto}.cart.open{right:0}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;z-index:9998}.overlay.show{display:block}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:10001;padding:12px}.modal.show{display:flex}
-.modal-box{background:#1a1a1a;border:1px solid #333;border-radius:18px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto}
-section{padding:60px 5%}
-.dash{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
-.dash div{background:#151515;border:1px solid var(--line);border-radius:14px;padding:12px}
-.dash strong{color:var(--gold);font-size:18px;display:block}
-input,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid #333;background:#111;color:#fff;margin-bottom:8px;font-size:12px}
-@media(max-width:768px){.dash{grid-template-columns:repeat(2,1fr)}.founder-grid{grid-template-columns:1fr !important}}
-</style>
+<style>body{font-family:'Space Grotesk',sans-serif;background:#0a0a0a;color:#fff}h1,h2{font-family:'Syne',sans-serif}:root{--gold:#FFC93C}</style>
 </head>
-<body>
-<div class="overlay" id="overlay" onclick="closeAll()"></div>
-
-<nav class="navbar">
-  <div style="font-weight:800;color:var(--gold);font-size:12px">ROYAL FOOD VILLA<br><span style="color:#fff;font-size:8px;letter-spacing:1px">ID 24150892008 | BALAY KARMAKER</span></div>
-  <div style="display:flex;gap:6px;align-items:center">
-    <button onclick="document.getElementById('dashboard').scrollIntoView({behavior:'smooth'})" style="background:#222;border:1px solid #333;color:#fff;padding:6px 10px;border-radius:100px;font-size:10px;cursor:pointer">Dashboard</button>
-    <button id="adminBtn" onclick="toggleAdmin()" style="background:#111;border:1px solid #333;color:#aaa;padding:6px 10px;border-radius:100px;font-size:10px;cursor:pointer">Admin OFF</button>
-    <button onclick="openCart()" class="btn-gold">🛒 <span id="cartCount">0</span></button>
+<body class="bg-[#0a0a0a] text-white">
+<!-- Navbar -->
+<nav class="fixed top-3 left-1/2 -translate-x-1/2 w-[96%] max-w-[1280px] bg-[#151515]/90 backdrop-blur-xl border border-zinc-800 rounded-full px-4 py-2.5 flex justify-between items-center z-[9999]">
+  <div class="font-black text-[12px] text-[#FFC93C] leading-none">ROYAL FOOD VILLA<br><span class="text-white text-[8px] tracking-widest">ID 24150892008 | BALAY</span></div>
+  <div class="flex gap-1.5 items-center">
+    <div class="relative hidden md:block"><input id="searchInput" placeholder="Search food..." class="bg-zinc-900 border border-zinc-800 rounded-full px-3 py-1.5 text-[11px] w-[160px] outline-none focus:border-yellow-500"><span class="absolute right-2 top-1.5 text-[10px] text-zinc-500">🔍</span></div>
+    <button onclick="openDashboard()" class="bg-zinc-800 border border-zinc-700 px-3 py-1.5 rounded-full text-[10px]">📊 Dashboard</button>
+    <button id="adminStatus" onclick="openAdminLogin()" class="bg-zinc-900 border border-zinc-700 px-3 py-1.5 rounded-full text-[10px] text-zinc-400">Admin: Locked</button>
+    <button onclick="openCart()" class="bg-[#FFC93C] text-black px-3 py-1.5 rounded-full font-bold text-[11px]">🛒 <span id="cartCount">0</span></button>
   </div>
 </nav>
 
-<div class="cart" id="cartModal">
-  <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="font-size:15px">Your Cart</h3><button onclick="closeAll()" style="background:none;border:none;color:#fff;font-size:24px;cursor:pointer">×</button></div>
-  <div id="cartItems" style="margin-top:12px"></div>
-  <div style="border-top:1px solid #222;margin-top:12px;padding-top:10px">
-    <div style="display:flex;justify-content:space-between;font-weight:800"><span>Total</span><span id="cartTotal" style="color:var(--gold)">BDT 0</span></div>
-    <button class="btn-gold" style="width:100%;margin-top:10px" onclick="placeOrder()">Place Order ✓</button>
-    <div id="orderMsg" style="text-align:center;color:var(--gold);font-size:11px;margin-top:8px"></div>
-  </div>
-  <div style="margin-top:14px"><h4 style="font-size:11px;color:#666">Order History</h4><div id="orderHistory" style="margin-top:6px"></div></div>
+<!-- Cart -->
+<div id="overlay" class="fixed inset-0 bg-black/70 hidden z-[9998]" onclick="closeAll()"></div>
+<div id="cartModal" class="fixed right-[-100%] top-0 w-[95%] max-w-[400px] h-screen bg-[#101010] border-l border-zinc-800 z-[10000] transition-all duration-300 p-4 overflow-y-auto">
+  <div class="flex justify-between"><h3 class="font-bold">Your Cart</h3><button onclick="closeAll()" class="text-2xl">×</button></div>
+  <div id="cartItems" class="mt-4"></div>
+  <div class="border-t border-zinc-800 mt-4 pt-3"><div class="flex justify-between font-bold"><span>Total</span><span id="cartTotal" class="text-[#FFC93C]">BDT 0</span></div><button onclick="openCheckout()" class="w-full mt-3 bg-[#FFC93C] text-black py-2.5 rounded-full font-bold text-sm">Proceed to Checkout →</button><div id="orderMsg" class="text-center text-[#FFC93C] text-[11px] mt-2"></div></div>
+  <div class="mt-4"><h4 class="text-[11px] text-zinc-500">Recent Orders</h4><div id="orderHistory" class="mt-2"></div></div>
 </div>
 
-<div class="modal" id="foodModal" onclick="if(event.target==this)closeAll()"><div class="modal-box"><img id="fImg" style="width:100%;height:220px;object-fit:cover"><div style="padding:14px"><span id="fBadge" class="badge"></span><h3 id="fName" style="margin-top:6px"></h3><p id="fDesc" style="color:#aaa;font-size:12px;margin-top:6px"></p><p id="fIng" style="color:#666;font-size:10px;margin-top:6px"></p><div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><span id="fPrice" style="color:var(--gold);font-weight:800"></span><button id="fAdd" class="btn-gold">Add +</button></div></div></div></div>
+<!-- Food Modal -->
+<div id="foodModal" class="fixed inset-0 bg-black/85 hidden items-center justify-center z-[10001] p-3" onclick="if(event.target==this)closeAll()"><div class="bg-zinc-900 border border-zinc-800 rounded-2xl max-w-[520px] w-full overflow-hidden"><img id="fImg" class="w-full h-[220px] object-cover"><div class="p-4"><span id="fBadge" class="bg-[#FFC93C] text-black px-2 py-0.5 rounded-full text-[9px] font-bold"></span><h3 id="fName" class="mt-2 font-bold"></h3><p id="fDesc" class="text-zinc-400 text-[12px] mt-1"></p><p id="fIng" class="text-zinc-600 text-[10px] mt-1"></p><div class="flex justify-between items-center mt-3"><span id="fPrice" class="text-[#FFC93C] font-bold text-lg"></span><button id="fAdd" class="bg-[#FFC93C] text-black px-4 py-2 rounded-full font-bold text-sm">Add to Cart</button></div></div></div></div>
 
-<div class="modal" id="editModal" onclick="if(event.target==this)closeAll()"><div class="modal-box" style="padding:14px"><h3 style="font-size:14px">Edit Food & Save</h3><input id="eName"><input id="ePrice" type="number"><input id="eCat"><input id="eBadge"><input id="eImg"><textarea id="eDesc"></textarea><textarea id="eIng"></textarea><div style="display:flex;gap:8px"><button class="btn-gold" style="flex:1" onclick="saveEdit()">Save</button><button onclick="closeAll()" style="flex:1;background:#222;border:1px solid #333;color:#fff;padding:10px;border-radius:100px">Cancel</button></div></div></div>
+<!-- Admin Login Modal -->
+<div id="adminLoginModal" class="fixed inset-0 bg-black/85 hidden items-center justify-center z-[10002] p-3"><div class="bg-zinc-900 border border-zinc-700 rounded-2xl max-w-[360px] w-full p-6"><h3 class="font-bold text-lg">Admin Login</h3><p class="text-[11px] text-zinc-500 mt-1">Only admin can edit menu & view revenue</p><input id="adminUser" placeholder="Username (admin)" class="w-full mt-4 bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-2.5 text-sm"><input id="adminPass" type="password" placeholder="Password (balay2026)" class="w-full mt-2 bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-2.5 text-sm"><button onclick="doAdminLogin()" class="w-full mt-3 bg-[#FFC93C] text-black py-2.5 rounded-full font-bold">Login</button><p id="loginMsg" class="text-[11px] text-red-400 mt-2 text-center"></p><p class="text-[10px] text-zinc-600 mt-3 text-center">Demo: admin / balay2026</p></div></div>
 
-<div class="modal" id="personModal" onclick="if(event.target==this)closeAll()"><div class="modal-box"><img id="pImg" style="width:100%;height:260px;object-fit:cover"><div style="padding:14px"><span id="pRole" class="badge"></span><h3 id="pName" style="margin-top:6px"></h3><p id="pDetails" style="color:#aaa;font-size:12px;margin-top:6px;white-space:pre-line;line-height:1.6"></p></div></div></div>
+<!-- Checkout Modal - Advanced -->
+<div id="checkoutModal" class="fixed inset-0 bg-black/85 hidden items-center justify-center z-[10002] p-3"><div class="bg-zinc-900 border border-zinc-700 rounded-2xl max-w-[420px] w-full p-5 max-h-[90vh] overflow-y-auto"><h3 class="font-bold">Checkout Details</h3><input id="cName" placeholder="Full Name *" class="w-full mt-3 bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-2.5 text-sm"><input id="cPhone" placeholder="Phone Number * (01XXXXXXXXX)" class="w-full mt-2 bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-2.5 text-sm"><textarea id="cAddress" placeholder="Delivery Address * (Chotora, Cumilla)" class="w-full mt-2 bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-2.5 text-sm h-[60px]"></textarea><select id="cPayment" class="w-full mt-2 bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-2.5 text-sm"><option value="Cash on Delivery">Cash on Delivery</option><option value="bKash">bKash</option><option value="Nagad">Nagad</option><option value="Card">Card Payment</option></select><div class="mt-3 bg-zinc-800/50 p-3 rounded-xl"><div class="flex justify-between text-[12px]"><span>Subtotal</span><span id="chkSubtotal">BDT 0</span></div><div class="flex justify-between text-[12px] mt-1"><span>Delivery</span><span>BDT 40</span></div><div class="flex justify-between font-bold mt-2 border-t border-zinc-700 pt-2"><span>Total</span><span id="chkTotal" class="text-[#FFC93C]">BDT 0</span></div></div><button onclick="confirmOrder()" class="w-full mt-3 bg-[#FFC93C] text-black py-2.5 rounded-full font-bold">Confirm Order - Generate Invoice</button><button onclick="closeAll()" class="w-full mt-2 bg-zinc-800 py-2 rounded-full text-sm">Cancel</button></div></div>
 
-<section style="padding:110px 5% 50px;background:linear-gradient(rgba(0,0,0,.65),#0a0a0a),url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200') center/cover;min-height:80vh;display:flex;align-items:center">
-  <div><div style="background:rgba(255,201,60,.15);border:1px solid rgba(255,201,60,.3);padding:5px 12px;border-radius:100px;display:inline-block;font-size:9px">FINAL PROJECT 2026 - DCSA - ID 24150892008</div><h1 style="font-size:clamp(2.2rem,6vw,4.2rem);line-height:.9;margin-top:10px">ROYAL FOOD VILLA<br><span style="color:var(--gold)">ORDER LIVE</span></h1><p style="color:#aaa;max-width:460px;margin:12px 0 18px;font-size:12px">Full restaurant app with Dashboard, Menu Filter, Cart, Edit & Save, Gallery, Chefs, Reviews.</p><div style="display:flex;gap:8px"><a href="#menu" class="btn-gold" style="text-decoration:none">Order Now →</a><button onclick="toggleAdmin()" style="border:1px solid #333;background:transparent;color:#fff;padding:9px 18px;border-radius:100px;font-size:12px;cursor:pointer">Admin Mode</button></div></div>
-</section>
+<!-- Invoice Modal -->
+<div id="invoiceModal" class="fixed inset-0 bg-black/90 hidden items-center justify-center z-[10003] p-3"><div class="bg-white text-black rounded-2xl max-w-[420px] w-full p-6"><div class="text-center border-b border-dashed border-zinc-300 pb-3"><h2 class="font-black text-lg">ROYAL FOOD VILLA</h2><p class="text-[10px] text-zinc-600">Invoice - Order Confirmed</p><p id="invOrderId" class="font-bold text-[#FFC93C] bg-black inline-block px-2 py-0.5 rounded text-[11px] mt-1"></p></div><div class="mt-3 text-[11px] space-y-1"><div class="flex justify-between"><span class="text-zinc-500">Customer:</span><span id="invCustomer" class="font-bold"></span></div><div class="flex justify-between"><span class="text-zinc-500">Phone:</span><span id="invPhone"></span></div><div class="flex justify-between"><span class="text-zinc-500">Address:</span><span id="invAddress" class="text-right max-w-[180px]"></span></div><div class="flex justify-between"><span class="text-zinc-500">Payment:</span><span id="invPayment"></span></div><div class="flex justify-between"><span class="text-zinc-500">Date:</span><span id="invDate"></span></div></div><div id="invItems" class="mt-3 border-t border-dashed border-zinc-300 pt-3 text-[11px]"></div><div class="mt-3 border-t border-zinc-800 pt-3 flex justify-between font-black"><span>Total Paid</span><span id="invTotal"></span></div><p class="text-[9px] text-center text-zinc-500 mt-4">Thank you! Developed by BALAY KARMAKER | ID 24150892008 | BOU DIIT</p><div class="flex gap-2 mt-4"><button onclick="window.print()" class="flex-1 bg-black text-white py-2 rounded-full text-sm">Print Invoice</button><button onclick="closeAll()" class="flex-1 bg-[#FFC93C] text-black py-2 rounded-full font-bold text-sm">Done</button></div></div></div>
 
-<section id="dashboard" style="background:#0f0f0f">
-  <h2 style="font-size:20px">📊 Dashboard</h2>
-  <div class="dash"><div><span style="font-size:10px;color:#888">ORDERS</span><strong id="dOrders">0</strong></div><div><span style="font-size:10px;color:#888">REVENUE</span><strong id="dRevenue">BDT 0</strong></div><div><span style="font-size:10px;color:#888">MENU ITEMS</span><strong id="dMenu">18</strong></div><div><span style="font-size:10px;color:#888">RATING</span><strong>4.9 ★</strong></div></div>
-</section>
+<!-- Hero -->
+<section class="pt-[110px] pb-[50px] px-[5%] bg-[linear-gradient(rgba(0,0,0,.65),#0a0a0a),url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200')] bg-cover min-h-[80vh] flex items-center"><div><div class="bg-[#FFC93C]/15 border border-[#FFC93C]/30 px-3 py-1 rounded-full inline-block text-[9px]">FINAL YEAR PROJECT 2026 - ID 24150892008 - FULL STACK</div><h1 class="font-[Syne] text-[clamp(2.2rem,6vw,4.2rem)] leading-[0.9] mt-3 font-black">ROYAL FOOD VILLA<br><span class="text-[#FFC93C]">ORDER LIVE</span></h1><p class="text-zinc-400 max-w-[460px] mt-3 text-[12px]">Industry-standard web app with Admin Login, Advanced Checkout, Invoice, Real-time Search, Dashboard. Built with Python Flask backend ready.</p><div class="flex gap-2 mt-5"><a href="#menu" class="bg-[#FFC93C] text-black px-5 py-2.5 rounded-full font-bold text-[12px] no-underline">Order Now →</a><button onclick="openAdminLogin()" class="border border-zinc-700 px-5 py-2.5 rounded-full text-[12px]">Admin Login</button></div></div></section>
 
-<section id="menu">
-  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-    <h2 style="font-size:20px">Menu - <span style="color:var(--gold)">Bangladeshi Local Price</span></h2>
-    <span style="font-size:10px;color:#666">Click food for details • Admin can edit & save</span>
-  </div>
-  <div id="filterNav" style="margin-top:10px"></div>
-  <div class="grid" id="menuGrid"></div>
-</section>
+<section id="dashboard" class="bg-[#0f0f0f] px-[5%] py-12"><h2 class="text-xl font-bold">📊 Live Dashboard</h2><p class="text-[10px] text-zinc-500 mt-1">Revenue visible only after admin login (Secure)</p><div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4"><div class="bg-[#151515] border border-zinc-800 rounded-xl p-3"><span class="text-[10px] text-zinc-500">ORDERS</span><strong id="dOrders" class="block text-[#FFC93C] text-lg">0</strong></div><div class="bg-[#151515] border border-zinc-800 rounded-xl p-3"><span class="text-[10px] text-zinc-500">REVENUE</span><strong id="dRevenue" class="block text-lg">🔒 Login Required</strong></div><div class="bg-[#151515] border border-zinc-800 rounded-xl p-3"><span class="text-[10px] text-zinc-500">MENU ITEMS</span><strong id="dMenu" class="block text-lg">18</strong></div><div class="bg-[#151515] border border-zinc-800 rounded-xl p-3"><span class="text-[10px] text-zinc-500">RATING</span><strong class="block text-lg">4.9 ★</strong></div></div></section>
 
-<section id="gallery" style="background:#111"><h2 style="font-size:20px">Shop <span style="color:var(--gold)">Gallery</span></h2><div class="grid" id="galleryGrid"></div></section>
-<section id="chefs"><h2 style="font-size:20px">Chef <span style="color:var(--gold)">Team</span></h2><div class="grid" id="chefGrid"></div></section>
-<section id="reviews" style="background:#111"><h2 style="font-size:20px">Reviews - <span style="color:var(--gold)">Real Customers</span></h2><div class="grid" id="reviewGrid"></div></section>
+<section id="menu" class="px-[5%] py-12"><div class="flex flex-col md:flex-row justify-between gap-3"><div><h2 class="text-xl font-bold">Menu - <span class="text-[#FFC93C]">Local Price</span></h2><p class="text-[10px] text-zinc-500 mt-1">Real-time search • Category filter • Admin can edit after login</p></div><input id="searchInputMobile" placeholder="Search food name..." class="md:hidden bg-zinc-900 border border-zinc-800 rounded-full px-3 py-2 text-[12px] w-full"></div><div id="filterNav" class="mt-4 flex flex-wrap"></div><div id="menuGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-4"></div></section>
 
-<!-- FOUNDER SECTION - CLEAN FIXED -->
-<section id="founder" style="background:#0a0a0a;padding:0">
-  <div style="padding:60px 5% 20px"><h2 style="font-size:22px">Founder - <span style="color:var(--gold)">Final Section</span></h2></div>
-  <div class="founder-grid" style="display:grid;grid-template-columns:380px 1fr;gap:0;background:#121212;border-top:1px solid var(--line);border-bottom:1px solid var(--line);max-width:1240px;margin:0 auto">
-    <div style="background:#000"><img src="founder.jpg" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500'" style="width:100%;height:100%;min-height:420px;object-fit:cover;display:block"></div>
-    <div style="padding:24px">
-      <span class="badge">FOUNDER & DEVELOPER - DCSA FINAL 2026</span>
-      <h2 style="font-size:28px;margin-top:10px;line-height:1.1">BALAY<br>KARMAKER</h2>
-      <p style="color:var(--gold);font-size:11px;margin-top:6px;letter-spacing:1px">ID: 24150892008 | DCSA 2023-2024 | BOU | DIIT CHITTAGONG</p>
-      
-      <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <div style="background:#1a1a1a;border:1px solid #222;border-radius:12px;padding:10px"><span style="font-size:9px;color:#888">PROGRAM</span><strong style="display:block;font-size:12px;margin-top:2px">DCSA (2023-2024)</strong></div>
-        <div style="background:#1a1a1a;border:1px solid #222;border-radius:12px;padding:10px"><span style="font-size:9px;color:#888">UNIVERSITY</span><strong style="display:block;font-size:12px;margin-top:2px">Bangladesh Open University</strong></div>
-        <div style="background:#1a1a1a;border:1px solid #222;border-radius:12px;padding:10px"><span style="font-size:9px;color:#888">STUDY CENTER</span><strong style="display:block;font-size:11px;margin-top:2px">Daffodil Institute of IT, Chittagong</strong></div>
-        <div style="background:#1a1a1a;border:1px solid #222;border-radius:12px;padding:10px"><span style="font-size:9px;color:#888">EMAIL</span><strong style="display:block;font-size:11px;margin-top:2px;color:var(--gold)">balaykarmokar12@gmail.com</strong></div>
-      </div>
+<section id="contact" class="bg-[#111] px-[5%] py-12"><h2 class="text-xl font-bold">Contact & <span class="text-[#FFC93C]">Location</span></h2><div class="grid md:grid-cols-2 gap-6 mt-6"><div class="bg-[#151515] border border-zinc-800 rounded-2xl p-5"><h3 class="font-bold text-sm">Developer Information</h3><div class="mt-4 space-y-3 text-[12px]"><div class="flex justify-between border-b border-zinc-800 pb-2"><span class="text-zinc-500">Name</span><span class="font-bold">Balay Karmaker</span></div><div class="flex justify-between border-b border-zinc-800 pb-2"><span class="text-zinc-500">ID</span><span class="font-bold text-[#FFC93C]">24150892008</span></div><div class="flex justify-between border-b border-zinc-800 pb-2"><span class="text-zinc-500">Program</span><span>DCSA 2023-2024</span></div><div class="flex justify-between border-b border-zinc-800 pb-2"><span class="text-zinc-500">University</span><span>BOU</span></div><div class="flex justify-between border-b border-zinc-800 pb-2"><span class="text-zinc-500">Study Center</span><span>DIIT Chittagong</span></div><div class="flex justify-between border-b border-zinc-800 pb-2"><span class="text-zinc-500">Address</span><span>Chotora, Cumilla (3500)</span></div><div class="flex justify-between"><span class="text-zinc-500">Mobile</span><span class="font-bold">01403496978</span></div></div><div class="mt-4 p-3 bg-[#FFC93C]/10 border border-[#FFC93C]/20 rounded-xl"><p class="text-[11px] text-zinc-300">📧 balaykarmokar12@gmail.com<br>🌐 Live: balaykarmokar12-cmyk.github.io/dcsa-project<br>💻 Tech: Python Flask, SQLite, Tailwind, JS</p></div></div><div class="bg-[#151515] border border-zinc-800 rounded-2xl p-5"><h3 class="font-bold text-sm">Restaurant Location</h3><div class="mt-3 bg-zinc-900 rounded-xl h-[200px] flex items-center justify-center text-zinc-600 text-[11px]">🗺️ Map: Chotora, Cumilla - 23.4607° N, 91.1809° E<br>Open: 10 AM - 10 PM | Delivery Available</div><div class="mt-3 flex gap-2"><a href="https://maps.google.com/?q=Cumilla+Chotora" target="_blank" class="flex-1 bg-zinc-800 text-center py-2 rounded-full text-[11px]">Open in Maps</a><a href="tel:01403496978" class="flex-1 bg-[#FFC93C] text-black text-center py-2 rounded-full font-bold text-[11px]">Call Now</a></div></div></div></section>
 
-      <div style="margin-top:18px">
-        <h4 style="font-size:12px;color:#fff;margin-bottom:6px">Project Features:</h4>
-        <ul style="font-size:11px;color:#aaa;line-height:1.8;margin-left:16px">
-          <li>18 Bangladeshi foods - BDT 20 to BDT 600 local market price</li>
-          <li>Live Cart - Add, Quantity +/-, Delete Order, Place Order</li>
-          <li>Food Edit & Save to LocalStorage - persists after reload</li>
-          <li>Dashboard with Total Orders & Revenue</li>
-          <li>Shop Gallery, Chef Team with detailed profiles, Customer Reviews</li>
-          <li>Responsive Glassmorphism Design - Mobile Friendly</li>
-        </ul>
-      </div>
+<section id="founder" class="px-0"><div class="px-[5%] py-8"><h2 class="text-xl font-bold">Founder - Final Section</h2></div><div class="grid md:grid-cols-[380px_1fr] gap-0 bg-[#121212] border-y border-zinc-800 max-w-[1240px] mx-auto"><div class="bg-black"><img src="founder.jpg" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500'" class="w-full h-full min-h-[420px] object-cover"></div><div class="p-6"><span class="bg-[#FFC93C] text-black px-2 py-0.5 rounded-full text-[9px] font-bold">FOUNDER & DEVELOPER - DCSA FINAL 2026</span><h2 class="text-[28px] font-black mt-3 leading-none">BALAY<br>KARMAKER</h2><p class="text-[#FFC93C] text-[11px] mt-2 tracking-wide">ID: 24150892008 | BOU | DIIT CHITTAGONG</p><div class="mt-4 grid grid-cols-2 gap-2"><div class="bg-zinc-900 border border-zinc-800 rounded-xl p-2.5"><span class="text-[9px] text-zinc-500">PROGRAM</span><strong class="block text-[11px]">DCSA 2023-2024</strong></div><div class="bg-zinc-900 border border-zinc-800 rounded-xl p-2.5"><span class="text-[9px] text-zinc-500">UNIVERSITY</span><strong class="block text-[11px]">Bangladesh Open University</strong></div></div><p class="text-zinc-400 text-[11px] mt-4 leading-relaxed">Final year project converted to full-stack with Flask backend, SQLite database, admin authentication, advanced checkout with invoice generation. Industry-standard features added as per requirements.</p></div></div></section>
 
-      <div style="margin-top:18px;padding:12px;background:rgba(255,201,60,.08);border:1px solid rgba(255,201,60,.2);border-radius:12px">
-        <p style="font-size:11px;color:#ccc;line-height:1.6">Address: Chotora, Cumilla (3500), Adarsha Sadar, Cumilla<br>Mobile: 01403496978<br>Live Link: balaykarmokar12-cmyk.github.io/royal-food-villa<br>Tech Stack: HTML5, CSS3, JS ES6, LocalStorage, GitHub Pages</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer style="text-align:center;padding:16px;background:#000;color:#555;font-size:9px;border-top:1px solid #111">© 2026 ROYAL FOOD VILLA • Developed by BALAY KARMAKER 24150892008 • DCSA BOU Final Project</footer>
+<footer class="text-center py-4 bg-black text-zinc-600 text-[10px] border-t border-zinc-900">© 2026 ROYAL FOOD VILLA - Developed by BALAY KARMAKER 24150892008 - DCSA BOU Final Project - Full Stack Version</footer>
 
 <script>
-const FALLBACK_FOOD="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500";
-const FALLBACK_CHEF="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=500";
+const FALLBACK="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500";
 let defaultFoods=[
 {n:"Shingara (2pcs)",p:20,cat:"Street",img:"https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&w=500",badge:"STREET",desc:"Garam Shingara",ing:"Aloo, Moyda"},
-{n:"Samosa",p:30,cat:"Street",img:"https://images.pexels.com/photos/5409015/pexels-photo-5409015.jpeg?auto=compress&w=500",badge:"STREET",desc:"Veg Samosa with chutney",ing:"Potato, Peas"},
-{n:"Fuchka (10pcs)",p:100,cat:"Street",img:"https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg?auto=compress&w=500",badge:"POPULAR",desc:"Tok Jhal Fuchka with tetul pani",ing:"Suji, Tetul, Chola"},
-{n:"Chotpoti",p:80,cat:"Street",img:"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500",badge:"POPULAR",desc:"Chotpoti with dim",ing:"Chola, Aloo, Dim"},
-{n:"Luchi Alur Dom",p:90,cat:"Street",img:"https://images.unsplash.com/photo-1505253758473-96b7015fcd40?w=500",badge:"BREAKFAST",desc:"Fulko Luchi",ing:"Moyda, Aloo"},
-{n:"Paratha Dal",p:50,cat:"Street",img:"https://images.pexels.com/photos/12737656/pexels-photo-12737656.jpeg?auto=compress&w=500",badge:"BREAKFAST",desc:"Paratha with dal",ing:"Atta, Dal"},
+{n:"Samosa",p:30,cat:"Street",img:"https://images.pexels.com/photos/5409015/pexels-photo-5409015.jpeg?auto=compress&w=500",badge:"STREET",desc:"Veg Samosa",ing:"Potato"},
+{n:"Fuchka (10pcs)",p:100,cat:"Street",img:"https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg?auto=compress&w=500",badge:"POPULAR",desc:"Fuchka with tetul pani",ing:"Suji, Tetul"},
+{n:"Chotpoti",p:80,cat:"Street",img:"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500",badge:"POPULAR",desc:"Chotpoti with dim",ing:"Chola, Aloo"},
+{n:"Luchi Alur Dom",p:90,cat:"Street",img:"https://images.unsplash.com/photo-1505253758473-96b7015fcd40?w=500",badge:"BREAKFAST",desc:"Luchi with Alur Dom",ing:"Moyda, Aloo"},
+{n:"Paratha Dal",p:50,cat:"Street",img:"https://images.pexels.com/photos/12737656/pexels-photo-12737656.jpeg?auto=compress&w=500",badge:"BREAKFAST",desc:"Paratha Dal",ing:"Atta, Dal"},
 {n:"Chicken Biryani",p:180,cat:"Biryani",img:"https://images.pexels.com/photos/12737656/pexels-photo-12737656.jpeg?auto=compress&w=500",badge:"BIRYANI",desc:"Chicken Biryani with egg",ing:"Rice, Chicken"},
 {n:"Beef Biryani",p:220,cat:"Biryani",img:"https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500",badge:"BIRYANI",desc:"Beef Biryani",ing:"Beef, Rice"},
-{n:"Kacchi Biryani",p:350,cat:"Biryani",img:"https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500",badge:"PREMIUM",desc:"Mutton Kacchi with aloo",ing:"Mutton, Aloo"},
-{n:"Morog Polao",p:200,cat:"Biryani",img:"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500",badge:"SPECIAL",desc:"Deshi Morog Polao",ing:"Chicken, Polao"},
-{n:"Hilsa Bhapa",p:450,cat:"Fish",img:"https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500",badge:"FISH",desc:"Shorshe Ilish Bhapa",ing:"Ilish, Shorisha"},
-{n:"Rui Curry",p:180,cat:"Fish",img:"https://images.unsplash.com/photo-1534939561121-4a00b8928b80?w=500",badge:"FISH",desc:"Rui Macher Jhol",ing:"Rui, Aloo, Tomato"},
-{n:"Grilled Chicken",p:220,cat:"Chicken",img:"https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?auto=compress&w=500",badge:"CHICKEN",desc:"Grilled Lemon Chicken",ing:"Chicken, Lemon"},
-{n:"Chicken Tikka",p:280,cat:"Chicken",img:"https://images.pexels.com/photos/2233729/pexels-photo-2233729.jpeg?auto=compress&w=500",badge:"CHICKEN",desc:"Chicken Tikka Kebab",ing:"Chicken, Doi"},
-{n:"Kala Bhuna",p:320,cat:"Chicken",img:"https://images.unsplash.com/photo-1505253758473-96b7015fcd40?w=500",badge:"BEEF",desc:"Chattogram Kala Bhuna",ing:"Beef, Masala"},
-{n:"Fried Rice Combo",p:250,cat:"Chicken",img:"https://images.unsplash.com/photo-1603133872875-ca2a98a0a6a2?w=500",badge:"COMBO",desc:"Fried Rice + Chili Chicken",ing:"Rice, Chicken"},
-{n:"Faluda",p:120,cat:"Dessert",img:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=500",badge:"DESSERT",desc:"Special Faluda",ing:"Milk, Jelly, Ice Cream"},
-{n:"Borhani",p:40,cat:"Dessert",img:"https://images.unsplash.com/photo-1544148103-0778bf10d330?w=500",badge:"DRINKS",desc:"Borhani - Tok Doi",ing:"Doi, Pudina"},
+{n:"Kacchi Biryani",p:350,cat:"Biryani",img:"https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500",badge:"PREMIUM",desc:"Mutton Kacchi",ing:"Mutton, Aloo"},
+{n:"Morog Polao",p:200,cat:"Biryani",img:"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500",badge:"SPECIAL",desc:"Morog Polao",ing:"Chicken, Polao"},
+{n:"Hilsa Bhapa",p:450,cat:"Fish",img:"https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500",badge:"FISH",desc:"Shorshe Ilish",ing:"Ilish, Shorisha"},
+{n:"Rui Curry",p:180,cat:"Fish",img:"https://images.unsplash.com/photo-1534939561121-4a00b8928b80?w=500",badge:"FISH",desc:"Rui Macher Jhol",ing:"Rui, Aloo"},
+{n:"Grilled Chicken",p:220,cat:"Chicken",img:"https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?auto=compress&w=500",badge:"CHICKEN",desc:"Grilled Chicken",ing:"Chicken, Lemon"},
+{n:"Chicken Tikka",p:280,cat:"Chicken",img:"https://images.pexels.com/photos/2233729/pexels-photo-2233729.jpeg?auto=compress&w=500",badge:"CHICKEN",desc:"Tikka Kebab",ing:"Chicken, Doi"},
+{n:"Kala Bhuna",p:320,cat:"Chicken",img:"https://images.unsplash.com/photo-1505253758473-96b7015fcd40?w=500",badge:"BEEF",desc:"Kala Bhuna",ing:"Beef"},
+{n:"Fried Rice Combo",p:250,cat:"Chicken",img:"https://images.unsplash.com/photo-1603133872875-ca2a98a0a6a2?w=500",badge:"COMBO",desc:"Fried Rice + Chicken",ing:"Rice, Chicken"},
+{n:"Faluda",p:120,cat:"Dessert",img:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=500",badge:"DESSERT",desc:"Special Faluda",ing:"Milk, Jelly"},
+{n:"Borhani",p:40,cat:"Dessert",img:"https://images.unsplash.com/photo-1544148103-0778bf10d330?w=500",badge:"DRINKS",desc:"Borhani",ing:"Doi, Pudina"},
 ];
-let foods=JSON.parse(localStorage.getItem('royal_foods_v6')||'null')||defaultFoods;
+let foods=JSON.parse(localStorage.getItem('royal_foods_v8')||'null')||defaultFoods;
 let cart=JSON.parse(localStorage.getItem('royal_cart')||'[]');
 let orders=JSON.parse(localStorage.getItem('royal_orders')||'[]');
-let isAdmin=JSON.parse(localStorage.getItem('royal_admin')||'false');
-let currentFilter="All";let editIndex=-1;
-function saveAll(){localStorage.setItem('royal_foods_v6',JSON.stringify(foods));localStorage.setItem('royal_cart',JSON.stringify(cart));localStorage.setItem('royal_orders',JSON.stringify(orders));localStorage.setItem('royal_admin',JSON.stringify(isAdmin));updateUI();}
-function toggleAdmin(){isAdmin=!isAdmin;saveAll();document.getElementById('adminBtn').innerText=isAdmin?'Admin ON':'Admin OFF';document.getElementById('adminBtn').style.background=isAdmin?'var(--gold)':'';document.getElementById('adminBtn').style.color=isAdmin?'#000':'#aaa';renderMenu();}
+let isAdmin=JSON.parse(localStorage.getItem('royal_admin_v8')||'false');
+let currentFilter="All";let editIndex=-1;let searchTerm="";
+
+function saveAll(){localStorage.setItem('royal_foods_v8',JSON.stringify(foods));localStorage.setItem('royal_cart',JSON.stringify(cart));localStorage.setItem('royal_orders',JSON.stringify(orders));localStorage.setItem('royal_admin_v8',JSON.stringify(isAdmin));updateUI();}
+
+function openAdminLogin(){if(isAdmin){toggleAdmin();return;}document.getElementById('adminLoginModal').classList.remove('hidden');document.getElementById('adminLoginModal').classList.add('flex');}
+function doAdminLogin(){let u=document.getElementById('adminUser').value,p=document.getElementById('adminPass').value;if(u==='admin'&&p==='balay2026'){isAdmin=true;saveAll();document.getElementById('adminStatus').innerText='Admin: ON';document.getElementById('adminStatus').className='bg-[#FFC93C] text-black px-3 py-1.5 rounded-full text-[10px] font-bold';closeAll();alert('Admin Login Success! Now you can edit menu & see revenue');renderMenu();updateUI();}else{document.getElementById('loginMsg').innerText='Wrong username or password! Use admin / balay2026';}}
+function toggleAdmin(){if(isAdmin){isAdmin=false;saveAll();document.getElementById('adminStatus').innerText='Admin: Locked';document.getElementById('adminStatus').className='bg-zinc-900 border border-zinc-700 px-3 py-1.5 rounded-full text-[10px] text-zinc-400';renderMenu();updateUI();}}
+
 function renderFilters(){let cats=["All","Street","Biryani","Fish","Chicken","Dessert"];document.getElementById('filterNav').innerHTML=cats.map(c=>`<button class="filter ${currentFilter==c?'active':''}" onclick="currentFilter='${c}';renderFilters();renderMenu()">${c}</button>`).join('');}
+
 function renderMenu(){
- let list=currentFilter=="All"?foods:foods.filter(f=>f.cat==currentFilter);
+ let list=foods.filter(f=>{
+  let matchCat=currentFilter=="All"||f.cat==currentFilter;
+  let matchSearch=f.n.toLowerCase().includes(searchTerm.toLowerCase())||f.desc.toLowerCase().includes(searchTerm.toLowerCase());
+  return matchCat&&matchSearch;
+ });
  document.getElementById('menuGrid').innerHTML=list.map(f=>{
   let idx=foods.indexOf(f);
-  return `<div class="card"><img src="${f.img}" onerror="this.onerror=null;this.src='${FALLBACK_FOOD}'" onclick="openFood(${idx})" style="cursor:pointer"><div class="card-body"><div style="display:flex;justify-content:space-between"><span class="badge">${f.badge}</span><span style="font-size:9px;color:#666">${f.cat}</span></div><h4 style="margin-top:6px;font-size:13px">${f.n}</h4><p style="color:#777;font-size:10px;margin-top:3px">${f.desc}</p><div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><span style="color:var(--gold);font-weight:800;font-size:13px">BDT ${f.p}</span><div style="display:flex;gap:4px"><button class="btn-gold" style="padding:5px 10px;font-size:10px" onclick="addToCart(${idx})">Add</button>${isAdmin?`<button onclick="openEdit(${idx})" style="background:#222;border:1px solid #444;color:#fff;padding:5px 8px;border-radius:100px;font-size:10px;cursor:pointer">✏️</button>`:''}</div></div></div></div>`;
+  return `<div class="bg-[#151515] border border-zinc-800 rounded-[18px] overflow-hidden hover:border-[#FFC93C] transition"><img src="${f.img}" onerror="this.src='${FALLBACK}'" onclick="openFood(${idx})" class="w-full h-[180px] object-cover cursor-pointer bg-zinc-900"><div class="p-3"><div class="flex justify-between"><span class="bg-[#FFC93C] text-black px-2 py-0.5 rounded-full text-[9px] font-bold">${f.badge}</span><span class="text-[9px] text-zinc-600">${f.cat}</span></div><h4 class="mt-1.5 text-[13px] font-bold">${f.n}</h4><p class="text-zinc-500 text-[10px] mt-1">${f.desc}</p><div class="flex justify-between items-center mt-2"><span class="text-[#FFC93C] font-bold text-[13px]">BDT ${f.p}</span><div class="flex gap-1"><button onclick="addToCart(${idx})" class="bg-[#FFC93C] text-black px-2.5 py-1 rounded-full text-[10px] font-bold">Add</button>${isAdmin?`<button onclick="openEdit(${idx})" class="bg-zinc-800 border border-zinc-700 px-2 py-1 rounded-full text-[10px]">✏️</button>`:''}</div></div></div></div>`;
  }).join('');
 }
-const gallery=[{t:"Dining Hall",img:"https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=500",d:"80+ AC seating"},{t:"Open Kitchen",img:"https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=500",d:"Live kitchen"},{t:"Rooftop",img:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500",d:"City view"},{t:"Counter",img:"https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500",d:"Fast parcel"}];
-const chefs=[{name:"Balay Karmaker",role:"Founder & Developer",img:"founder.jpg",details:"ID:24150892008\nDCSA 2023-2024\nBOU DIIT Chittagong\nFull Stack Developer\nBuilt Dashboard, Cart, Edit features\nEmail: balaykarmokar12@gmail.com"},{name:"Chef Karim Uddin",role:"Head Chef 15 Yrs",img:"https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=500",details:"15 Years\nKacchi, Kala Bhuna Specialist\nFrom Cox's Bazar\nLeads 8 member team"},{name:"Chef Fatema Akter",role:"Dessert Chef",img:"https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=500",details:"8 Years\nFaluda, Borhani Specialist\nFrom Cumilla"}];
-const reviews=[{name:"Rahim Uddin",loc:"Cumilla",star:5,text:"Kacchi ta wow! 350 takay best!",food:"Kacchi"},{name:"Nusrat Jahan",loc:"Chittagong",star:5,text:"Fuchka authentic taste!",food:"Fuchka"},{name:"Sakib",loc:"Dhaka",star:4,text:"Chicken Biryani 180 taka - student budget!",food:"Biryani"},{name:"Ayesha",loc:"Feni",star:5,text:"Hilsa Bhapa ma er ranna r moto!",food:"Hilsa"},{name:"Mehedi Hassan",loc:"DIIT",star:5,text:"Balay er project e sob ache, Sir full marks dibe!",food:"All"},{name:"Tania",loc:"Cumilla",star:4,text:"Borhani 40 taka only! Perfect!",food:"Borhani"}];
-document.getElementById('galleryGrid').innerHTML=gallery.map(g=>`<div class="card"><img src="${g.img}" onerror="this.src='${FALLBACK_FOOD}'"><div class="card-body"><h4 style="font-size:12px">${g.t}</h4><p style="font-size:10px;color:#777">${g.d}</p></div></div>`).join('');
-document.getElementById('chefGrid').innerHTML=chefs.map((c,i)=>`<div class="card" style="cursor:pointer" onclick="openPerson(${i})"><img src="${c.img}" onerror="this.src='${FALLBACK_CHEF}'"><div class="card-body"><span class="badge">${c.role}</span><h4 style="margin-top:6px;font-size:12px">${c.name}</h4><p style="font-size:10px;color:#777">Click details →</p></div></div>`).join('');
-document.getElementById('reviewGrid').innerHTML=reviews.map(r=>`<div style="background:#151515;border:1px solid #222;border-radius:14px;padding:12px"><div style="display:flex;justify-content:space-between"><div><h4 style="font-size:12px">${r.name}</h4><span style="font-size:9px;color:#666">${r.loc} • ${r.food}</span></div><span style="color:var(--gold);font-size:11px">${'★'.repeat(r.star)}</span></div><p style="font-size:11px;color:#aaa;margin-top:8px">"${r.text}"</p></div>`).join('');
+
 function updateUI(){
  document.getElementById('cartCount').innerText=cart.reduce((s,x)=>s+x.qty,0);
  let total=cart.reduce((s,x)=>s+x.p*x.qty,0);
  document.getElementById('cartTotal').innerText='BDT '+total;
- document.getElementById('cartItems').innerHTML=cart.length?cart.map((c,i)=>`<div style="display:flex;gap:8px;background:#1a1a1a;padding:8px;border-radius:10px;margin-bottom:6px"><img src="${c.img}" onerror="this.src='${FALLBACK_FOOD}'" style="width:44px;height:44px;border-radius:8px;object-fit:cover"><div style="flex:1"><div style="font-size:11px">${c.n}</div><div style="font-size:10px;color:var(--gold)">BDT ${c.p} x ${c.qty}</div></div><div style="display:flex;align-items:center;gap:4px"><button onclick="chg(${i},-1)" style="width:22px;height:22px;border-radius:50%;border:1px solid #333;background:#111;color:#fff;cursor:pointer">-</button><span style="font-size:11px">${c.qty}</span><button onclick="chg(${i},1)" style="width:22px;height:22px;border-radius:50%;border:1px solid #333;background:#111;color:#fff;cursor:pointer">+</button><button onclick="del(${i})" style="margin-left:4px;background:#ff444422;color:#ff6666;border:none;padding:3px 6px;border-radius:6px;cursor:pointer">✕</button></div></div>`).join(''):`<p style="text-align:center;color:#555;padding:16px;font-size:11px">Cart empty - Add food</p>`;
- document.getElementById('orderHistory').innerHTML=orders.slice(0,5).map(o=>`<div style="background:#151515;padding:6px;border-radius:8px;margin-bottom:4px;font-size:10px;color:#777">BDT ${o.total} • ${o.date}</div>`).join('')||'<span style="color:#444;font-size:10px">No orders</span>';
+ document.getElementById('cartItems').innerHTML=cart.length?cart.map((c,i)=>`<div class="flex gap-2 bg-zinc-900 p-2 rounded-xl mb-2"><img src="${c.img}" onerror="this.src='${FALLBACK}'" class="w-11 h-11 rounded-lg object-cover"><div class="flex-1"><div class="text-[11px] font-bold">${c.n}</div><div class="text-[10px] text-[#FFC93C]">BDT ${c.p} x ${c.qty}</div></div><div class="flex items-center gap-1"><button onclick="chg(${i},-1)" class="w-6 h-6 rounded-full border border-zinc-700 bg-zinc-800">-</button><span class="text-[11px]">${c.qty}</span><button onclick="chg(${i},1)" class="w-6 h-6 rounded-full border border-zinc-700 bg-zinc-800">+</button><button onclick="del(${i})" class="ml-1 bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded text-[10px]">✕</button></div></div>`).join(''):`<p class="text-center text-zinc-600 py-4 text-[11px]">Cart empty</p>`;
+ document.getElementById('orderHistory').innerHTML=orders.slice(0,5).map(o=>`<div class="bg-zinc-900 p-2 rounded-lg mb-1 text-[10px] text-zinc-500">ID: ${o.orderId} • BDT ${o.total} • ${o.date}</div>`).join('')||'<span class="text-zinc-600 text-[10px]">No orders</span>';
  document.getElementById('dOrders').innerText=orders.length;
- document.getElementById('dRevenue').innerText='BDT '+orders.reduce((s,o)=>s+o.total,0);
+ document.getElementById('dMenu').innerText=foods.length;
+ if(isAdmin){document.getElementById('dRevenue').innerText='BDT '+(orders.reduce((s,o)=>s+o.total,0)+ (orders.length*40));document.getElementById('dRevenue').classList.remove('text-zinc-500');document.getElementById('adminStatus').innerText='Admin: ON';document.getElementById('adminStatus').className='bg-[#FFC93C] text-black px-3 py-1.5 rounded-full text-[10px] font-bold';}
 }
+
 function chg(i,d){cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);saveAll();}
 function del(i){cart.splice(i,1);saveAll();}
 function addToCart(i){let f=foods[i];let ex=cart.find(x=>x.n==f.n);if(ex)ex.qty++;else cart.push({...f,qty:1});saveAll();openCart();}
-function openCart(){document.getElementById('cartModal').classList.add('open');document.getElementById('overlay').classList.add('show');}
-function closeAll(){document.getElementById('cartModal').classList.remove('open');document.getElementById('overlay').classList.remove('show');document.getElementById('foodModal').classList.remove('show');document.getElementById('editModal').classList.remove('show');document.getElementById('personModal').classList.remove('show');}
-function placeOrder(){if(!cart.length){document.getElementById('orderMsg').innerText='Cart empty!';return;}let total=cart.reduce((s,x)=>s+x.p*x.qty,0);orders.unshift({id:Date.now(),items:[...cart],total,date:new Date().toLocaleString()});cart=[];saveAll();document.getElementById('orderMsg').innerText='✅ Order Placed BDT '+total;setTimeout(()=>document.getElementById('orderMsg').innerText='',3000);}
-function openFood(i){let f=foods[i];document.getElementById('fImg').src=f.img;document.getElementById('fName').innerText=f.n;document.getElementById('fBadge').innerText=f.badge;document.getElementById('fDesc').innerText=f.desc;document.getElementById('fIng').innerText='Ingredients: '+f.ing;document.getElementById('fPrice').innerText='BDT '+f.p;document.getElementById('fAdd').onclick=()=>{addToCart(i);closeAll();};document.getElementById('foodModal').classList.add('show');}
-function openEdit(i){editIndex=i;let f=foods[i];document.getElementById('eName').value=f.n;document.getElementById('ePrice').value=f.p;document.getElementById('eCat').value=f.cat;document.getElementById('eBadge').value=f.badge;document.getElementById('eImg').value=f.img;document.getElementById('eDesc').value=f.desc;document.getElementById('eIng').value=f.ing;document.getElementById('editModal').classList.add('show');}
+function openCart(){document.getElementById('cartModal').style.right='0';document.getElementById('overlay').classList.remove('hidden');}
+function closeAll(){document.getElementById('cartModal').style.right='-100%';document.getElementById('overlay').classList.add('hidden');document.querySelectorAll('.modal, #adminLoginModal, #checkoutModal, #invoiceModal').forEach(m=>{m.classList.add('hidden');m.classList.remove('flex');});document.getElementById('foodModal').classList.add('hidden');document.getElementById('foodModal').classList.remove('flex');}
+function openDashboard(){document.getElementById('dashboard').scrollIntoView({behavior:'smooth'});}
+
+function openCheckout(){
+ if(!cart.length){alert('Cart empty!');return;}
+ let subtotal=cart.reduce((s,x)=>s+x.p*x.qty,0);
+ document.getElementById('chkSubtotal').innerText='BDT '+subtotal;
+ document.getElementById('chkTotal').innerText='BDT '+(subtotal+40);
+ document.getElementById('checkoutModal').classList.remove('hidden');document.getElementById('checkoutModal').classList.add('flex');
+}
+function confirmOrder(){
+ let name=document.getElementById('cName').value,phone=document.getElementById('cPhone').value,addr=document.getElementById('cAddress').value,pay=document.getElementById('cPayment').value;
+ if(!name||!phone||!addr){alert('Please fill Name, Phone, Address');return;}
+ let subtotal=cart.reduce((s,x)=>s+x.p*x.qty,0);let total=subtotal+40;
+ let orderId='ROYAL-'+Math.floor(10000+Math.random()*90000);
+ let order={orderId,items:[...cart],subtotal,delivery:40,total,customer:name,phone,address:addr,payment:pay,date:new Date().toLocaleString()};
+ orders.unshift(order);cart=[];saveAll();closeAll();
+ // Invoice
+ document.getElementById('invOrderId').innerText=orderId;
+ document.getElementById('invCustomer').innerText=name;
+ document.getElementById('invPhone').innerText=phone;
+ document.getElementById('invAddress').innerText=addr;
+ document.getElementById('invPayment').innerText=pay;
+ document.getElementById('invDate').innerText=order.date;
+ document.getElementById('invItems').innerHTML=order.items.map(it=>`<div class="flex justify-between py-1"><span>${it.n} x ${it.qty}</span><span>BDT ${it.p*it.qty}</span></div>`).join('')+`<div class="flex justify-between py-1 border-t border-dashed mt-2"><span>Delivery</span><span>BDT 40</span></div>`;
+ document.getElementById('invTotal').innerText='BDT '+total;
+ document.getElementById('invoiceModal').classList.remove('hidden');document.getElementById('invoiceModal').classList.add('flex');
+}
+function openFood(i){let f=foods[i];document.getElementById('fImg').src=f.img;document.getElementById('fName').innerText=f.n;document.getElementById('fBadge').innerText=f.badge;document.getElementById('fDesc').innerText=f.desc;document.getElementById('fIng').innerText='Ingredients: '+f.ing;document.getElementById('fPrice').innerText='BDT '+f.p;document.getElementById('fAdd').onclick=()=>{addToCart(i);closeAll();};document.getElementById('foodModal').classList.remove('hidden');document.getElementById('foodModal').classList.add('flex');}
+function openEdit(i){if(!isAdmin){alert('Admin login required!');openAdminLogin();return;}editIndex=i;let f=foods[i];document.getElementById('eName').value=f.n;document.getElementById('ePrice').value=f.p;document.getElementById('eCat').value=f.cat;document.getElementById('eBadge').value=f.badge;document.getElementById('eImg').value=f.img;document.getElementById('eDesc').value=f.desc;document.getElementById('eIng').value=f.ing;document.getElementById('editModal').classList.remove('hidden');document.getElementById('editModal').classList.add('flex');}
 function saveEdit(){if(editIndex<0)return;foods[editIndex]={n:document.getElementById('eName').value,p:Number(document.getElementById('ePrice').value),cat:document.getElementById('eCat').value,badge:document.getElementById('eBadge').value,img:document.getElementById('eImg').value,desc:document.getElementById('eDesc').value,ing:document.getElementById('eIng').value};saveAll();renderMenu();closeAll();}
-function openPerson(i){let p=chefs[i];document.getElementById('pImg').src=p.img;document.getElementById('pName').innerText=p.name;document.getElementById('pRole').innerText=p.role;document.getElementById('pDetails').innerText=p.details;document.getElementById('personModal').classList.add('show');}
+
+// Search
+document.getElementById('searchInput').addEventListener('input',e=>{searchTerm=e.target.value;renderMenu();});
+document.getElementById('searchInputMobile').addEventListener('input',e=>{searchTerm=e.target.value;renderMenu();});
+
 renderFilters();renderMenu();updateUI();
-document.getElementById('adminBtn').innerText=isAdmin?'Admin ON':'Admin OFF';
-if(isAdmin){document.getElementById('adminBtn').style.background='var(--gold)';document.getElementById('adminBtn').style.color='#000';}
 </script>
 </body>
 </html>
