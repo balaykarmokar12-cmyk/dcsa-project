@@ -1,173 +1,172 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ROYAL FOOD VILLA - BALAY KARMAKER 24150892008 - FINAL</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<title>ROYAL FOOD VILLA - BALAY KARMAKER - FINAL</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
-:root{--gold:#FFC93C;--bg:#0a0a0a;--card:#151515;--b:#222}
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:#fff}
-.navbar{position:fixed;top:10px;left:50%;transform:translateX(-50%);width:97%;max-width:1280px;background:rgba(20,20,20,.95);backdrop-filter:blur(20px);border:1px solid var(--b);border-radius:100px;padding:10px 16px;display:flex;justify-content:space-between;z-index:9999}
-.btn-gold{background:var(--gold);color:#000;padding:10px 18px;border-radius:100px;font-weight:700;border:none;cursor:pointer}
-.filter-btn{padding:7px 14px;border-radius:100px;border:1px solid #333;background:#111;color:#aaa;font-size:11px;cursor:pointer;margin:3px}.filter-btn.active{background:var(--gold);color:#000;font-weight:700}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;margin-top:18px}
-.card{background:var(--card);border:1px solid var(--b);border-radius:18px;overflow:hidden}
-.card img{width:100%;height:190px;object-fit:cover}
+:root{--gold:#FFC93C;--bg:#0a0a0a;--card:#151515;--line:#222}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:#fff;line-height:1.5}
+h1,h2{font-family:'Syne',sans-serif}
+.navbar{position:fixed;top:10px;left:50%;transform:translateX(-50%);width:96%;max-width:1240px;background:rgba(18,18,18,.96);border:1px solid var(--line);border-radius:100px;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;z-index:9999}
+.btn-gold{background:var(--gold);color:#000;padding:9px 18px;border-radius:100px;font-weight:700;border:none;cursor:pointer;font-size:12px}
+.filter{padding:7px 14px;border-radius:100px;border:1px solid #333;background:#111;color:#aaa;font-size:11px;cursor:pointer;margin:3px}.filter.active{background:var(--gold);color:#000;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:.2s}.card:hover{border-color:var(--gold)}
+.card img{width:100%;height:180px;object-fit:cover;background:#111}
 .card-body{padding:12px}
 .badge{background:var(--gold);color:#000;padding:2px 8px;border-radius:100px;font-size:9px;font-weight:800}
-.cart{position:fixed;right:-100%;top:0;width:95%;max-width:400px;height:100vh;background:#101010;border-left:1px solid #222;z-index:10000;transition:.4s;padding:16px;overflow-y:auto}.cart.open{right:0}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;z-index:9998}.overlay.show{display:block}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:10001;padding:14px}.modal.show{display:flex}
-.modal-box{background:#1a1a1a;border:1px solid #333;border-radius:20px;max-width:540px;width:100%;max-height:90vh;overflow-y:auto}
-section{padding:55px 5%}
-.dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:16px}
-.dash div{background:#151515;border:1px solid #222;border-radius:14px;padding:12px}.dash strong{color:var(--gold);font-size:20px;display:block}
-input,textarea,select{width:100%;padding:10px;border-radius:10px;border:1px solid #333;background:#111;color:#fff;margin-bottom:8px;font-size:12px}
+.cart{position:fixed;right:-100%;top:0;width:95%;max-width:380px;height:100vh;background:#101010;border-left:1px solid #222;z-index:10000;transition:.35s;padding:16px;overflow-y:auto}.cart.open{right:0}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;z-index:9998}.overlay.show{display:block}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:10001;padding:12px}.modal.show{display:flex}
+.modal-box{background:#1a1a1a;border:1px solid #333;border-radius:18px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto}
+section{padding:60px 5%}
+.dash{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.dash div{background:#151515;border:1px solid var(--line);border-radius:14px;padding:12px}
+.dash strong{color:var(--gold);font-size:18px;display:block}
+input,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid #333;background:#111;color:#fff;margin-bottom:8px;font-size:12px}
+@media(max-width:768px){.dash{grid-template-columns:repeat(2,1fr)}.founder-grid{grid-template-columns:1fr !important}}
 </style>
 </head>
 <body>
 <div class="overlay" id="overlay" onclick="closeAll()"></div>
 
 <nav class="navbar">
-  <div style="font-weight:800;color:var(--gold);font-size:12px">ROYAL FOOD VILLA<br><span style="color:#fff;font-size:8px">24150892008 | BALAY</span></div>
-  <div style="display:flex;gap:6px">
+  <div style="font-weight:800;color:var(--gold);font-size:12px">ROYAL FOOD VILLA<br><span style="color:#fff;font-size:8px;letter-spacing:1px">ID 24150892008 | BALAY KARMAKER</span></div>
+  <div style="display:flex;gap:6px;align-items:center">
     <button onclick="document.getElementById('dashboard').scrollIntoView({behavior:'smooth'})" style="background:#222;border:1px solid #333;color:#fff;padding:6px 10px;border-radius:100px;font-size:10px;cursor:pointer">Dashboard</button>
-    <button id="adminBtn" onclick="toggleAdmin()" style="background:#111;border:1px solid #333;color:#aaa;padding:6px 10px;border-radius:100px;font-size:10px;cursor:pointer">Admin: OFF</button>
-    <button onclick="openCart()" class="btn-gold" style="padding:6px 12px;font-size:11px">🛒 <span id="cartCount">0</span></button>
+    <button id="adminBtn" onclick="toggleAdmin()" style="background:#111;border:1px solid #333;color:#aaa;padding:6px 10px;border-radius:100px;font-size:10px;cursor:pointer">Admin OFF</button>
+    <button onclick="openCart()" class="btn-gold">🛒 <span id="cartCount">0</span></button>
   </div>
 </nav>
 
 <div class="cart" id="cartModal">
-  <div style="display:flex;justify-content:space-between"><h3 style="font-size:16px">Your Cart</h3><button onclick="closeAll()" style="background:none;border:none;color:#fff;font-size:24px;cursor:pointer">×</button></div>
+  <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="font-size:15px">Your Cart</h3><button onclick="closeAll()" style="background:none;border:none;color:#fff;font-size:24px;cursor:pointer">×</button></div>
   <div id="cartItems" style="margin-top:12px"></div>
-  <div style="border-top:1px solid #222;margin-top:12px;padding-top:12px">
+  <div style="border-top:1px solid #222;margin-top:12px;padding-top:10px">
     <div style="display:flex;justify-content:space-between;font-weight:800"><span>Total</span><span id="cartTotal" style="color:var(--gold)">BDT 0</span></div>
     <button class="btn-gold" style="width:100%;margin-top:10px" onclick="placeOrder()">Place Order ✓</button>
     <div id="orderMsg" style="text-align:center;color:var(--gold);font-size:11px;margin-top:8px"></div>
   </div>
-  <div style="margin-top:16px"><h4 style="font-size:11px;color:#666">Order History</h4><div id="orderHistory" style="margin-top:6px"></div></div>
+  <div style="margin-top:14px"><h4 style="font-size:11px;color:#666">Order History</h4><div id="orderHistory" style="margin-top:6px"></div></div>
 </div>
 
-<div class="modal" id="foodModal" onclick="if(event.target==this)closeAll()">
-  <div class="modal-box"><img id="fImg" style="width:100%;height:240px;object-fit:cover"><div style="padding:14px"><span id="fBadge" class="badge"></span><h3 id="fName" style="margin-top:6px"></h3><p id="fDesc" style="color:#aaa;font-size:12px;margin-top:6px"></p><p id="fIng" style="color:#666;font-size:10px;margin-top:6px"></p><div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><span id="fPrice" style="color:var(--gold);font-weight:800"></span><button id="fAdd" class="btn-gold">Add +</button></div></div></div>
-</div>
+<div class="modal" id="foodModal" onclick="if(event.target==this)closeAll()"><div class="modal-box"><img id="fImg" style="width:100%;height:220px;object-fit:cover"><div style="padding:14px"><span id="fBadge" class="badge"></span><h3 id="fName" style="margin-top:6px"></h3><p id="fDesc" style="color:#aaa;font-size:12px;margin-top:6px"></p><p id="fIng" style="color:#666;font-size:10px;margin-top:6px"></p><div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><span id="fPrice" style="color:var(--gold);font-weight:800"></span><button id="fAdd" class="btn-gold">Add +</button></div></div></div></div>
 
-<div class="modal" id="editModal" onclick="if(event.target==this)closeAll()">
-  <div class="modal-box" style="padding:16px">
-    <h3>✏️ Edit Food - Save করা যাবে</h3>
-    <p style="font-size:10px;color:#888;margin:6px 0">Edit করে Save করলে LocalStorage এ Save থাকবে, Page Reload করলেও থাকবে</p>
-    <input id="eName" placeholder="Food Name"><input id="ePrice" type="number" placeholder="Price BDT"><input id="eCat" placeholder="Category"><input id="eBadge" placeholder="Badge"><input id="eImg" placeholder="Image URL"><textarea id="eDesc" placeholder="Description"></textarea><textarea id="eIng" placeholder="Ingredients"></textarea>
-    <div style="display:flex;gap:8px"><button class="btn-gold" style="flex:1" onclick="saveEdit()">Save ✓</button><button onclick="closeAll()" style="flex:1;background:#222;border:1px solid #333;color:#fff;padding:10px;border-radius:100px;cursor:pointer">Cancel</button></div>
-  </div>
-</div>
+<div class="modal" id="editModal" onclick="if(event.target==this)closeAll()"><div class="modal-box" style="padding:14px"><h3 style="font-size:14px">Edit Food & Save</h3><input id="eName"><input id="ePrice" type="number"><input id="eCat"><input id="eBadge"><input id="eImg"><textarea id="eDesc"></textarea><textarea id="eIng"></textarea><div style="display:flex;gap:8px"><button class="btn-gold" style="flex:1" onclick="saveEdit()">Save</button><button onclick="closeAll()" style="flex:1;background:#222;border:1px solid #333;color:#fff;padding:10px;border-radius:100px">Cancel</button></div></div></div>
 
-<div class="modal" id="personModal" onclick="if(event.target==this)closeAll()">
-  <div class="modal-box"><img id="pImg" style="width:100%;height:280px;object-fit:cover"><div style="padding:14px"><span id="pRole" class="badge"></span><h3 id="pName" style="margin-top:6px"></h3><p id="pDetails" style="color:#aaa;font-size:12px;margin-top:6px;white-space:pre-line;line-height:1.7"></p></div></div>
-</div>
+<div class="modal" id="personModal" onclick="if(event.target==this)closeAll()"><div class="modal-box"><img id="pImg" style="width:100%;height:260px;object-fit:cover"><div style="padding:14px"><span id="pRole" class="badge"></span><h3 id="pName" style="margin-top:6px"></h3><p id="pDetails" style="color:#aaa;font-size:12px;margin-top:6px;white-space:pre-line;line-height:1.6"></p></div></div></div>
 
-<section style="padding:110px 5% 50px;background:linear-gradient(rgba(0,0,0,.6),#0a0a0a),url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1300') center/cover;min-height:80vh;display:flex;align-items:center">
-  <div><div style="background:rgba(255,201,60,.15);border:1px solid rgba(255,201,60,.3);padding:5px 12px;border-radius:100px;display:inline-block;font-size:9px;margin-bottom:10px">BOU DCSA 2023-2024 FINAL ID 24150892008</div><h1 style="font-family:Syne;font-size:clamp(2.2rem,6vw,4.2rem);line-height:.9">ROYAL FOOD VILLA<br><span style="color:var(--gold)">ORDER LIVE</span></h1><p style="color:#aaa;max-width:480px;margin:12px 0 18px;font-size:12px">Admin Mode এ খাবার Edit করা যায়, Save করলে থেকে যায়। Dashboard, Cart, Review সব Live।</p><div style="display:flex;gap:8px"><a href="#menu" class="btn-gold" style="text-decoration:none;font-size:12px">Order Now →</a><button onclick="toggleAdmin()" style="border:1px solid #333;background:transparent;color:#fff;padding:10px 18px;border-radius:100px;font-size:12px;cursor:pointer">Admin Mode On</button></div></div>
+<section style="padding:110px 5% 50px;background:linear-gradient(rgba(0,0,0,.65),#0a0a0a),url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200') center/cover;min-height:80vh;display:flex;align-items:center">
+  <div><div style="background:rgba(255,201,60,.15);border:1px solid rgba(255,201,60,.3);padding:5px 12px;border-radius:100px;display:inline-block;font-size:9px">FINAL PROJECT 2026 - DCSA - ID 24150892008</div><h1 style="font-size:clamp(2.2rem,6vw,4.2rem);line-height:.9;margin-top:10px">ROYAL FOOD VILLA<br><span style="color:var(--gold)">ORDER LIVE</span></h1><p style="color:#aaa;max-width:460px;margin:12px 0 18px;font-size:12px">Full restaurant app with Dashboard, Menu Filter, Cart, Edit & Save, Gallery, Chefs, Reviews.</p><div style="display:flex;gap:8px"><a href="#menu" class="btn-gold" style="text-decoration:none">Order Now →</a><button onclick="toggleAdmin()" style="border:1px solid #333;background:transparent;color:#fff;padding:9px 18px;border-radius:100px;font-size:12px;cursor:pointer">Admin Mode</button></div></div>
 </section>
 
 <section id="dashboard" style="background:#0f0f0f">
-  <h2 style="font-size:22px">📊 Dashboard</h2>
-  <div class="dash"><div><span style="font-size:10px;color:#888">ORDERS</span><strong id="dOrders">0</strong></div><div><span style="font-size:10px;color:#888">REVENUE</span><strong id="dRevenue">BDT 0</strong></div><div><span style="font-size:10px;color:#888">MENU</span><strong id="dMenu">18</strong></div><div><span style="font-size:10px;color:#888">RATING</span><strong>4.9 ★</strong></div></div>
+  <h2 style="font-size:20px">📊 Dashboard</h2>
+  <div class="dash"><div><span style="font-size:10px;color:#888">ORDERS</span><strong id="dOrders">0</strong></div><div><span style="font-size:10px;color:#888">REVENUE</span><strong id="dRevenue">BDT 0</strong></div><div><span style="font-size:10px;color:#888">MENU ITEMS</span><strong id="dMenu">18</strong></div><div><span style="font-size:10px;color:#888">RATING</span><strong>4.9 ★</strong></div></div>
 </section>
 
 <section id="menu">
-  <h2 style="font-size:22px">Menu <span style="color:var(--gold)">- Local Bangladeshi Price</span></h2>
-  <p style="font-size:10px;color:#666;margin-top:4px">Admin Mode On করলে প্রতিটা খাবারে Edit Button আসবে</p>
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <h2 style="font-size:20px">Menu - <span style="color:var(--gold)">Bangladeshi Local Price</span></h2>
+    <span style="font-size:10px;color:#666">Click food for details • Admin can edit & save</span>
+  </div>
   <div id="filterNav" style="margin-top:10px"></div>
   <div class="grid" id="menuGrid"></div>
 </section>
 
-<section id="gallery" style="background:#111"><h2 style="font-size:22px">Shop <span style="color:var(--gold)">Gallery</span></h2><div class="grid" id="galleryGrid"></div></section>
-<section id="chefs"><h2 style="font-size:22px">Chef <span style="color:var(--gold)">Team</span></h2><div class="grid" id="chefGrid"></div></section>
-<section id="reviews" style="background:#111"><h2 style="font-size:22px">Reviews <span style="color:var(--gold)">- Real Comments</span></h2><div class="grid" id="reviewGrid"></div></section>
+<section id="gallery" style="background:#111"><h2 style="font-size:20px">Shop <span style="color:var(--gold)">Gallery</span></h2><div class="grid" id="galleryGrid"></div></section>
+<section id="chefs"><h2 style="font-size:20px">Chef <span style="color:var(--gold)">Team</span></h2><div class="grid" id="chefGrid"></div></section>
+<section id="reviews" style="background:#111"><h2 style="font-size:20px">Reviews - <span style="color:var(--gold)">Real Customers</span></h2><div class="grid" id="reviewGrid"></div></section>
 
-<section id="founder" style="background:#0f0f0f">
-  <h2 style="font-size:22px">Founder - <span style="color:var(--gold)">Final Section</span></h2>
-  <div style="display:grid;grid-template-columns:1fr 1.3fr;gap:0;margin-top:16px;background:#151515;border:1px solid #222;border-radius:20px;overflow:hidden">
-    <img src="founder.jpg" onerror="this.src='https://i.ibb.co/0jQ3Z7R/founder.jpg'" style="width:100%;height:100%;min-height:380px;object-fit:cover;background:#000">
-    <div style="padding:18px">
-      <span class="badge">FOUNDER & DEVELOPER • DCSA FINAL 2026</span>
-      <h2 style="margin-top:10px;font-size:24px">BALAY KARMAKER</h2>
-      <p style="color:var(--gold);font-size:11px">ID:24150892008 | DCSA 2023-2024 | BOU | DIIT Chittagong</p>
-      <p style="color:#aaa;font-size:12px;line-height:1.8;margin-top:12px;white-space:pre-line">আমি Balay Karmaker, BOU এর DCSA ছাত্র।
-এই Project টা আমার Final Submission।
+<!-- FOUNDER SECTION - CLEAN FIXED -->
+<section id="founder" style="background:#0a0a0a;padding:0">
+  <div style="padding:60px 5% 20px"><h2 style="font-size:22px">Founder - <span style="color:var(--gold)">Final Section</span></h2></div>
+  <div class="founder-grid" style="display:grid;grid-template-columns:380px 1fr;gap:0;background:#121212;border-top:1px solid var(--line);border-bottom:1px solid var(--line);max-width:1240px;margin:0 auto">
+    <div style="background:#000"><img src="founder.jpg" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500'" style="width:100%;height:100%;min-height:420px;object-fit:cover;display:block"></div>
+    <div style="padding:24px">
+      <span class="badge">FOUNDER & DEVELOPER - DCSA FINAL 2026</span>
+      <h2 style="font-size:28px;margin-top:10px;line-height:1.1">BALAY<br>KARMAKER</h2>
+      <p style="color:var(--gold);font-size:11px;margin-top:6px;letter-spacing:1px">ID: 24150892008 | DCSA 2023-2024 | BOU | DIIT CHITTAGONG</p>
+      
+      <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:#1a1a1a;border:1px solid #222;border-radius:12px;padding:10px"><span style="font-size:9px;color:#888">PROGRAM</span><strong style="display:block;font-size:12px;margin-top:2px">DCSA (2023-2024)</strong></div>
+        <div style="background:#1a1a1a;border:1px solid #222;border-radius:12px;padding:10px"><span style="font-size:9px;color:#888">UNIVERSITY</span><strong style="display:block;font-size:12px;margin-top:2px">Bangladesh Open University</strong></div>
+        <div style="background:#1a1a1a;border:1px solid #222;border-radius:12px;padding:10px"><span style="font-size:9px;color:#888">STUDY CENTER</span><strong style="display:block;font-size:11px;margin-top:2px">Daffodil Institute of IT, Chittagong</strong></div>
+        <div style="background:#1a1a1a;border:1px solid #222;border-radius:12px;padding:10px"><span style="font-size:9px;color:#888">EMAIL</span><strong style="display:block;font-size:11px;margin-top:2px;color:var(--gold)">balaykarmokar12@gmail.com</strong></div>
+      </div>
 
-Features:
-✓ 18 Bangladeshi Foods - 20৳ to 600৳
-✓ Cart + - Delete, Save
-✓ Food Edit + Save (LocalStorage)
-✓ Dashboard, Gallery, Chefs, Reviews
-✓ Responsive + Glassmorphism
+      <div style="margin-top:18px">
+        <h4 style="font-size:12px;color:#fff;margin-bottom:6px">Project Features:</h4>
+        <ul style="font-size:11px;color:#aaa;line-height:1.8;margin-left:16px">
+          <li>18 Bangladeshi foods - BDT 20 to BDT 600 local market price</li>
+          <li>Live Cart - Add, Quantity +/-, Delete Order, Place Order</li>
+          <li>Food Edit & Save to LocalStorage - persists after reload</li>
+          <li>Dashboard with Total Orders & Revenue</li>
+          <li>Shop Gallery, Chef Team with detailed profiles, Customer Reviews</li>
+          <li>Responsive Glassmorphism Design - Mobile Friendly</li>
+        </ul>
+      </div>
 
-Tech: HTML5, CSS3, JS ES6, LocalStorage, GitHub Pages
-
-Email: balaykarmokar12@gmail.com
-Mobile: 01403496978
-Address: Chotora, Cumilla
-Study: DIIT Chittagong
-
-Photo Background Premium ভাবে Edit করা, Dark Background যাতে Red T-shirt এর সাথে ম্যাচ করে।</p>
+      <div style="margin-top:18px;padding:12px;background:rgba(255,201,60,.08);border:1px solid rgba(255,201,60,.2);border-radius:12px">
+        <p style="font-size:11px;color:#ccc;line-height:1.6">Address: Chotora, Cumilla (3500), Adarsha Sadar, Cumilla<br>Mobile: 01403496978<br>Live Link: balaykarmokar12-cmyk.github.io/royal-food-villa<br>Tech Stack: HTML5, CSS3, JS ES6, LocalStorage, GitHub Pages</p>
+      </div>
     </div>
   </div>
 </section>
 
-<footer style="text-align:center;padding:18px;background:#000;color:#555;font-size:9px;border-top:1px solid #222">© 2026 ROYAL FOOD VILLA • BALAY KARMAKER 24150892008 • Final Project</footer>
+<footer style="text-align:center;padding:16px;background:#000;color:#555;font-size:9px;border-top:1px solid #111">© 2026 ROYAL FOOD VILLA • Developed by BALAY KARMAKER 24150892008 • DCSA BOU Final Project</footer>
 
 <script>
+const FALLBACK_FOOD="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500";
+const FALLBACK_CHEF="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=500";
 let defaultFoods=[
-{n:"Shingara (2pcs)",p:20,cat:"Street",img:"https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=500",badge:"STREET",desc:"গরম গরম শিঙাড়া",ing:"Aloo, Moyda, Badam"},
-{n:"Samosa",p:30,cat:"Street",img:"https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=500",badge:"STREET",desc:"Crispy samosa",ing:"Potato, Peas"},
-{n:"Fuchka (10pcs)",p:100,cat:"Street",img:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=500",badge:"POPULAR",desc:"Tok Jhal Fuchka",ing:"Suji, Tetul, Chola"},
-{n:"Chotpoti",p:80,cat:"Street",img:"https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=500",badge:"POPULAR",desc:"Chotpoti",ing:"Chola, Aloo, Dim"},
-{n:"Luchi & Alur Dom",p:90,cat:"Street",img:"https://images.unsplash.com/photo-1505253758473-96b7015fcd40?w=500",badge:"BREAKFAST",desc:"Luchi Alur Dom",ing:"Moyda, Aloo"},
-{n:"Paratha Dal",p:50,cat:"Street",img:"https://images.unsplash.com/photo-1618449840665-9ed506d73a34?w=500",badge:"BREAKFAST",desc:"Paratha Dal",ing:"Atta, Dal"},
-{n:"Chicken Biryani",p:180,cat:"Biryani",img:"https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=500",badge:"BIRYANI",desc:"Chicken Biryani with egg",ing:"Rice, Chicken, Egg"},
+{n:"Shingara (2pcs)",p:20,cat:"Street",img:"https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&w=500",badge:"STREET",desc:"Garam Shingara",ing:"Aloo, Moyda"},
+{n:"Samosa",p:30,cat:"Street",img:"https://images.pexels.com/photos/5409015/pexels-photo-5409015.jpeg?auto=compress&w=500",badge:"STREET",desc:"Veg Samosa with chutney",ing:"Potato, Peas"},
+{n:"Fuchka (10pcs)",p:100,cat:"Street",img:"https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg?auto=compress&w=500",badge:"POPULAR",desc:"Tok Jhal Fuchka with tetul pani",ing:"Suji, Tetul, Chola"},
+{n:"Chotpoti",p:80,cat:"Street",img:"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500",badge:"POPULAR",desc:"Chotpoti with dim",ing:"Chola, Aloo, Dim"},
+{n:"Luchi Alur Dom",p:90,cat:"Street",img:"https://images.unsplash.com/photo-1505253758473-96b7015fcd40?w=500",badge:"BREAKFAST",desc:"Fulko Luchi",ing:"Moyda, Aloo"},
+{n:"Paratha Dal",p:50,cat:"Street",img:"https://images.pexels.com/photos/12737656/pexels-photo-12737656.jpeg?auto=compress&w=500",badge:"BREAKFAST",desc:"Paratha with dal",ing:"Atta, Dal"},
+{n:"Chicken Biryani",p:180,cat:"Biryani",img:"https://images.pexels.com/photos/12737656/pexels-photo-12737656.jpeg?auto=compress&w=500",badge:"BIRYANI",desc:"Chicken Biryani with egg",ing:"Rice, Chicken"},
 {n:"Beef Biryani",p:220,cat:"Biryani",img:"https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500",badge:"BIRYANI",desc:"Beef Biryani",ing:"Beef, Rice"},
-{n:"Kacchi Biryani",p:350,cat:"Biryani",img:"https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500",badge:"PREMIUM",desc:"Kacchi Mutton",ing:"Mutton, Aloo, Basmati"},
-{n:"Morog Polao",p:200,cat:"Biryani",img:"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500",badge:"SPECIAL",desc:"Morog Polao",ing:"Deshi Chicken"},
-{n:"Hilsa Bhapa",p:450,cat:"Fish",img:"https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500",badge:"FISH",desc:"Shorshe Ilish",ing:"Ilish, Shorisha"},
-{n:"Rui Curry",p:180,cat:"Fish",img:"https://images.unsplash.com/photo-1534939561121-4a00b8928b80?w=500",badge:"FISH",desc:"Rui Macher Jhol",ing:"Rui, Aloo"},
-{n:"Grilled Chicken",p:220,cat:"Chicken",img:"https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=500",badge:"CHICKEN",desc:"Grilled Chicken",ing:"Chicken, Lemon"},
-{n:"Chicken Tikka",p:280,cat:"Chicken",img:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=500",badge:"CHICKEN",desc:"Tikka Kebab",ing:"Chicken, Doi"},
-{n:"Kala Bhuna",p:320,cat:"Chicken",img:"https://images.unsplash.com/photo-1505253758473-96b7015fcd40?w=500",badge:"BEEF",desc:"Kala Bhuna",ing:"Beef, Masala"},
-{n:"Fried Rice Combo",p:250,cat:"Chicken",img:"https://images.unsplash.com/photo-1603133872875-ca2a98a0a6a2?w=500",badge:"COMBO",desc:"Fried Rice + Chicken",ing:"Rice, Chicken"},
-{n:"Faluda",p:120,cat:"Dessert",img:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=500",badge:"DESSERT",desc:"Faluda Special",ing:"Milk, Jelly"},
-{n:"Borhani",p:40,cat:"Dessert",img:"https://images.unsplash.com/photo-1544148103-0778bf10d330?w=500",badge:"DRINKS",desc:"Borhani",ing:"Doi, Pudina"},
+{n:"Kacchi Biryani",p:350,cat:"Biryani",img:"https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500",badge:"PREMIUM",desc:"Mutton Kacchi with aloo",ing:"Mutton, Aloo"},
+{n:"Morog Polao",p:200,cat:"Biryani",img:"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500",badge:"SPECIAL",desc:"Deshi Morog Polao",ing:"Chicken, Polao"},
+{n:"Hilsa Bhapa",p:450,cat:"Fish",img:"https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500",badge:"FISH",desc:"Shorshe Ilish Bhapa",ing:"Ilish, Shorisha"},
+{n:"Rui Curry",p:180,cat:"Fish",img:"https://images.unsplash.com/photo-1534939561121-4a00b8928b80?w=500",badge:"FISH",desc:"Rui Macher Jhol",ing:"Rui, Aloo, Tomato"},
+{n:"Grilled Chicken",p:220,cat:"Chicken",img:"https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?auto=compress&w=500",badge:"CHICKEN",desc:"Grilled Lemon Chicken",ing:"Chicken, Lemon"},
+{n:"Chicken Tikka",p:280,cat:"Chicken",img:"https://images.pexels.com/photos/2233729/pexels-photo-2233729.jpeg?auto=compress&w=500",badge:"CHICKEN",desc:"Chicken Tikka Kebab",ing:"Chicken, Doi"},
+{n:"Kala Bhuna",p:320,cat:"Chicken",img:"https://images.unsplash.com/photo-1505253758473-96b7015fcd40?w=500",badge:"BEEF",desc:"Chattogram Kala Bhuna",ing:"Beef, Masala"},
+{n:"Fried Rice Combo",p:250,cat:"Chicken",img:"https://images.unsplash.com/photo-1603133872875-ca2a98a0a6a2?w=500",badge:"COMBO",desc:"Fried Rice + Chili Chicken",ing:"Rice, Chicken"},
+{n:"Faluda",p:120,cat:"Dessert",img:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=500",badge:"DESSERT",desc:"Special Faluda",ing:"Milk, Jelly, Ice Cream"},
+{n:"Borhani",p:40,cat:"Dessert",img:"https://images.unsplash.com/photo-1544148103-0778bf10d330?w=500",badge:"DRINKS",desc:"Borhani - Tok Doi",ing:"Doi, Pudina"},
 ];
-let foods=JSON.parse(localStorage.getItem('royal_foods')||'null')||defaultFoods;
+let foods=JSON.parse(localStorage.getItem('royal_foods_v6')||'null')||defaultFoods;
 let cart=JSON.parse(localStorage.getItem('royal_cart')||'[]');
 let orders=JSON.parse(localStorage.getItem('royal_orders')||'[]');
 let isAdmin=JSON.parse(localStorage.getItem('royal_admin')||'false');
 let currentFilter="All";let editIndex=-1;
-
-function saveAll(){localStorage.setItem('royal_foods',JSON.stringify(foods));localStorage.setItem('royal_cart',JSON.stringify(cart));localStorage.setItem('royal_orders',JSON.stringify(orders));localStorage.setItem('royal_admin',JSON.stringify(isAdmin));updateUI();}
-
-function toggleAdmin(){isAdmin=!isAdmin;saveAll();document.getElementById('adminBtn').innerText=isAdmin?'Admin: ON':'Admin: OFF';document.getElementById('adminBtn').style.background=isAdmin?'var(--gold)':'';document.getElementById('adminBtn').style.color=isAdmin?'#000':'#aaa';renderMenu();}
-function renderFilters(){let cats=["All","Street","Biryani","Fish","Chicken","Dessert"];document.getElementById('filterNav').innerHTML=cats.map(c=>`<button class="filter-btn ${currentFilter==c?'active':''}" onclick="currentFilter='${c}';renderFilters();renderMenu()">${c}</button>`).join('');}
+function saveAll(){localStorage.setItem('royal_foods_v6',JSON.stringify(foods));localStorage.setItem('royal_cart',JSON.stringify(cart));localStorage.setItem('royal_orders',JSON.stringify(orders));localStorage.setItem('royal_admin',JSON.stringify(isAdmin));updateUI();}
+function toggleAdmin(){isAdmin=!isAdmin;saveAll();document.getElementById('adminBtn').innerText=isAdmin?'Admin ON':'Admin OFF';document.getElementById('adminBtn').style.background=isAdmin?'var(--gold)':'';document.getElementById('adminBtn').style.color=isAdmin?'#000':'#aaa';renderMenu();}
+function renderFilters(){let cats=["All","Street","Biryani","Fish","Chicken","Dessert"];document.getElementById('filterNav').innerHTML=cats.map(c=>`<button class="filter ${currentFilter==c?'active':''}" onclick="currentFilter='${c}';renderFilters();renderMenu()">${c}</button>`).join('');}
 function renderMenu(){
  let list=currentFilter=="All"?foods:foods.filter(f=>f.cat==currentFilter);
  document.getElementById('menuGrid').innerHTML=list.map(f=>{
   let idx=foods.indexOf(f);
-  return `<div class="card"><img src="${f.img}" onclick="openFood(${idx})" style="cursor:pointer"><div class="card-body"><div style="display:flex;justify-content:space-between"><span class="badge">${f.badge}</span><span style="font-size:9px;color:#666">${f.cat}</span></div><h4 style="margin-top:6px;font-size:13px">${f.n}</h4><p style="color:#777;font-size:10px;margin-top:3px">${f.desc}</p><div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><span style="color:var(--gold);font-weight:800;font-size:13px">BDT ${f.p}</span><div style="display:flex;gap:4px"><button class="btn-gold" style="padding:5px 10px;font-size:10px" onclick="addToCart(${idx})">Add</button>${isAdmin?`<button onclick="openEdit(${idx})" style="background:#222;border:1px solid #444;color:#fff;padding:5px 8px;border-radius:100px;font-size:10px;cursor:pointer">✏️</button>`:''}</div></div></div></div>`;
+  return `<div class="card"><img src="${f.img}" onerror="this.onerror=null;this.src='${FALLBACK_FOOD}'" onclick="openFood(${idx})" style="cursor:pointer"><div class="card-body"><div style="display:flex;justify-content:space-between"><span class="badge">${f.badge}</span><span style="font-size:9px;color:#666">${f.cat}</span></div><h4 style="margin-top:6px;font-size:13px">${f.n}</h4><p style="color:#777;font-size:10px;margin-top:3px">${f.desc}</p><div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><span style="color:var(--gold);font-weight:800;font-size:13px">BDT ${f.p}</span><div style="display:flex;gap:4px"><button class="btn-gold" style="padding:5px 10px;font-size:10px" onclick="addToCart(${idx})">Add</button>${isAdmin?`<button onclick="openEdit(${idx})" style="background:#222;border:1px solid #444;color:#fff;padding:5px 8px;border-radius:100px;font-size:10px;cursor:pointer">✏️</button>`:''}</div></div></div></div>`;
  }).join('');
- document.getElementById('dMenu').innerText=foods.length;
 }
-const gallery=[{t:"Dining Hall",img:"https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=500",d:"80+ seating"},{t:"Open Kitchen",img:"https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=500",d:"Live kitchen"},{t:"Rooftop",img:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500",d:"Rooftop view"},{t:"Counter",img:"https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500",d:"Takeaway"}];
-const chefs=[{name:"Balay Karmaker",role:"Founder & Developer",img:"founder.jpg",details:"ID:24150892008\nDCSA 2023-2024\nBOU DIIT\nFull Stack Developer\nBuilt full app with Dashboard, Edit, Cart"},{name:"Chef Karim Uddin",role:"Head Chef 15 Yrs",img:"https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=500",details:"15 Years Exp\nSpecialty Kacchi, Kala Bhuna\nFrom Cox's Bazar"},{name:"Chef Fatema",role:"Dessert Chef",img:"https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=500",details:"8 Years Exp\nFaluda, Borhani\nFrom Cumilla"}];
-const reviews=[{name:"Rahim Uddin",loc:"Cumilla",star:5,text:"Kacchi ta wow! 350 takay best!",food:"Kacchi"},{name:"Nusrat Jahan",loc:"Chittagong",star:5,text:"Fuchka authentic!",food:"Fuchka"},{name:"Sakib",loc:"Dhaka",star:4,text:"Chicken Biryani 180 taka student budget!",food:"Biryani"},{name:"Ayesha",loc:"Feni",star:5,text:"Hilsa Bhapa ma er ranna r moto",food:"Hilsa"},{name:"Mehedi",loc:"DIIT",star:5,text:"Balay er project best, Sir full marks dibe!",food:"All"},{name:"Tania",loc:"Cumilla",star:4,text:"Borhani 40 taka only!",food:"Borhani"}];
-document.getElementById('galleryGrid').innerHTML=gallery.map(g=>`<div class="card"><img src="${g.img}"><div class="card-body"><h4 style="font-size:12px">${g.t}</h4><p style="font-size:10px;color:#777">${g.d}</p></div></div>`).join('');
-document.getElementById('chefGrid').innerHTML=chefs.map((c,i)=>`<div class="card" style="cursor:pointer" onclick="openPerson(${i})"><img src="${c.img}" onerror="this.src='https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=500'"><div class="card-body"><span class="badge">${c.role}</span><h4 style="margin-top:6px;font-size:12px">${c.name}</h4><p style="font-size:10px;color:#777">Click details →</p></div></div>`).join('');
+const gallery=[{t:"Dining Hall",img:"https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=500",d:"80+ AC seating"},{t:"Open Kitchen",img:"https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=500",d:"Live kitchen"},{t:"Rooftop",img:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500",d:"City view"},{t:"Counter",img:"https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500",d:"Fast parcel"}];
+const chefs=[{name:"Balay Karmaker",role:"Founder & Developer",img:"founder.jpg",details:"ID:24150892008\nDCSA 2023-2024\nBOU DIIT Chittagong\nFull Stack Developer\nBuilt Dashboard, Cart, Edit features\nEmail: balaykarmokar12@gmail.com"},{name:"Chef Karim Uddin",role:"Head Chef 15 Yrs",img:"https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=500",details:"15 Years\nKacchi, Kala Bhuna Specialist\nFrom Cox's Bazar\nLeads 8 member team"},{name:"Chef Fatema Akter",role:"Dessert Chef",img:"https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=500",details:"8 Years\nFaluda, Borhani Specialist\nFrom Cumilla"}];
+const reviews=[{name:"Rahim Uddin",loc:"Cumilla",star:5,text:"Kacchi ta wow! 350 takay best!",food:"Kacchi"},{name:"Nusrat Jahan",loc:"Chittagong",star:5,text:"Fuchka authentic taste!",food:"Fuchka"},{name:"Sakib",loc:"Dhaka",star:4,text:"Chicken Biryani 180 taka - student budget!",food:"Biryani"},{name:"Ayesha",loc:"Feni",star:5,text:"Hilsa Bhapa ma er ranna r moto!",food:"Hilsa"},{name:"Mehedi Hassan",loc:"DIIT",star:5,text:"Balay er project e sob ache, Sir full marks dibe!",food:"All"},{name:"Tania",loc:"Cumilla",star:4,text:"Borhani 40 taka only! Perfect!",food:"Borhani"}];
+document.getElementById('galleryGrid').innerHTML=gallery.map(g=>`<div class="card"><img src="${g.img}" onerror="this.src='${FALLBACK_FOOD}'"><div class="card-body"><h4 style="font-size:12px">${g.t}</h4><p style="font-size:10px;color:#777">${g.d}</p></div></div>`).join('');
+document.getElementById('chefGrid').innerHTML=chefs.map((c,i)=>`<div class="card" style="cursor:pointer" onclick="openPerson(${i})"><img src="${c.img}" onerror="this.src='${FALLBACK_CHEF}'"><div class="card-body"><span class="badge">${c.role}</span><h4 style="margin-top:6px;font-size:12px">${c.name}</h4><p style="font-size:10px;color:#777">Click details →</p></div></div>`).join('');
 document.getElementById('reviewGrid').innerHTML=reviews.map(r=>`<div style="background:#151515;border:1px solid #222;border-radius:14px;padding:12px"><div style="display:flex;justify-content:space-between"><div><h4 style="font-size:12px">${r.name}</h4><span style="font-size:9px;color:#666">${r.loc} • ${r.food}</span></div><span style="color:var(--gold);font-size:11px">${'★'.repeat(r.star)}</span></div><p style="font-size:11px;color:#aaa;margin-top:8px">"${r.text}"</p></div>`).join('');
-
 function updateUI(){
  document.getElementById('cartCount').innerText=cart.reduce((s,x)=>s+x.qty,0);
  let total=cart.reduce((s,x)=>s+x.p*x.qty,0);
  document.getElementById('cartTotal').innerText='BDT '+total;
- document.getElementById('cartItems').innerHTML=cart.length?cart.map((c,i)=>`<div style="display:flex;gap:8px;background:#1a1a1a;padding:8px;border-radius:10px;margin-bottom:6px"><img src="${c.img}" style="width:44px;height:44px;border-radius:8px;object-fit:cover"><div style="flex:1"><div style="font-size:11px">${c.n}</div><div style="font-size:10px;color:var(--gold)">BDT ${c.p} x ${c.qty}</div></div><div style="display:flex;align-items:center;gap:4px"><button onclick="chg(${i},-1)" style="width:22px;height:22px;border-radius:50%;border:1px solid #333;background:#111;color:#fff;cursor:pointer">-</button><span style="font-size:11px">${c.qty}</span><button onclick="chg(${i},1)" style="width:22px;height:22px;border-radius:50%;border:1px solid #333;background:#111;color:#fff;cursor:pointer">+</button><button onclick="del(${i})" style="margin-left:4px;background:#ff444422;color:#ff6666;border:none;padding:3px 6px;border-radius:6px;cursor:pointer">✕</button></div></div>`).join(''):`<p style="text-align:center;color:#555;padding:16px;font-size:11px">Cart empty</p>`;
+ document.getElementById('cartItems').innerHTML=cart.length?cart.map((c,i)=>`<div style="display:flex;gap:8px;background:#1a1a1a;padding:8px;border-radius:10px;margin-bottom:6px"><img src="${c.img}" onerror="this.src='${FALLBACK_FOOD}'" style="width:44px;height:44px;border-radius:8px;object-fit:cover"><div style="flex:1"><div style="font-size:11px">${c.n}</div><div style="font-size:10px;color:var(--gold)">BDT ${c.p} x ${c.qty}</div></div><div style="display:flex;align-items:center;gap:4px"><button onclick="chg(${i},-1)" style="width:22px;height:22px;border-radius:50%;border:1px solid #333;background:#111;color:#fff;cursor:pointer">-</button><span style="font-size:11px">${c.qty}</span><button onclick="chg(${i},1)" style="width:22px;height:22px;border-radius:50%;border:1px solid #333;background:#111;color:#fff;cursor:pointer">+</button><button onclick="del(${i})" style="margin-left:4px;background:#ff444422;color:#ff6666;border:none;padding:3px 6px;border-radius:6px;cursor:pointer">✕</button></div></div>`).join(''):`<p style="text-align:center;color:#555;padding:16px;font-size:11px">Cart empty - Add food</p>`;
  document.getElementById('orderHistory').innerHTML=orders.slice(0,5).map(o=>`<div style="background:#151515;padding:6px;border-radius:8px;margin-bottom:4px;font-size:10px;color:#777">BDT ${o.total} • ${o.date}</div>`).join('')||'<span style="color:#444;font-size:10px">No orders</span>';
  document.getElementById('dOrders').innerText=orders.length;
  document.getElementById('dRevenue').innerText='BDT '+orders.reduce((s,o)=>s+o.total,0);
@@ -182,7 +181,9 @@ function openFood(i){let f=foods[i];document.getElementById('fImg').src=f.img;do
 function openEdit(i){editIndex=i;let f=foods[i];document.getElementById('eName').value=f.n;document.getElementById('ePrice').value=f.p;document.getElementById('eCat').value=f.cat;document.getElementById('eBadge').value=f.badge;document.getElementById('eImg').value=f.img;document.getElementById('eDesc').value=f.desc;document.getElementById('eIng').value=f.ing;document.getElementById('editModal').classList.add('show');}
 function saveEdit(){if(editIndex<0)return;foods[editIndex]={n:document.getElementById('eName').value,p:Number(document.getElementById('ePrice').value),cat:document.getElementById('eCat').value,badge:document.getElementById('eBadge').value,img:document.getElementById('eImg').value,desc:document.getElementById('eDesc').value,ing:document.getElementById('eIng').value};saveAll();renderMenu();closeAll();}
 function openPerson(i){let p=chefs[i];document.getElementById('pImg').src=p.img;document.getElementById('pName').innerText=p.name;document.getElementById('pRole').innerText=p.role;document.getElementById('pDetails').innerText=p.details;document.getElementById('personModal').classList.add('show');}
-renderFilters();renderMenu();updateUI();document.getElementById('adminBtn').innerText=isAdmin?'Admin: ON':'Admin: OFF';
+renderFilters();renderMenu();updateUI();
+document.getElementById('adminBtn').innerText=isAdmin?'Admin ON':'Admin OFF';
+if(isAdmin){document.getElementById('adminBtn').style.background='var(--gold)';document.getElementById('adminBtn').style.color='#000';}
 </script>
 </body>
 </html>
