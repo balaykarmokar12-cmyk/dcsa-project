@@ -1,4 +1,104 @@
-body{font-family:'Space Grotesk',sans-serif;background:#0a0a0a;color:#fff}
-h1,h2{font-family:'Syne',sans-serif}
-.filter{background:#1a1a1a;border:1px solid #2a2a2a;padding:6px 14px;border-radius:999px;font-size:11px}
-.filter.active{background:#FFC93C;color:#000;font-weight:bold}
+/* =============================================
+   ROYAL FOOD VILLA - FINAL YEAR PROJECT
+   BALAY KARMAKER - ID 24150892008
+   DCSA - BOU - DIIT CHITTAGONG - 2026
+   ============================================= */
+
+/* Global Styles */
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: #0a0a0a;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+h1, h2, h3 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+}
+:root {
+  --gold: #FFC93C;
+  --dark: #0a0a0a;
+  --card: #151515;
+  --border: #27272a;
+}
+
+/* Navbar Styles */
+nav {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Filter Button Styles - For Sir to check CSS */
+.filter {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #a1a1aa;
+}
+.filter:hover {
+  border-color: var(--gold);
+  color: white;
+}
+.filter.active {
+  background: var(--gold);
+  color: #000000;
+  font-weight: bold;
+  border-color: var(--gold);
+  transform: scale(1.05);
+}
+
+/* Menu Card Styles */
+.menu-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.menu-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(255,201,60,0.1);
+}
+
+/* Button Styles */
+.btn-gold {
+  background: var(--gold);
+  color: #000;
+  font-weight: bold;
+  border-radius: 999px;
+  transition: all 0.2s;
+}
+.btn-gold:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(255,201,60,0.3);
+}
+
+/* Modal Styles */
+.modal {
+  backdrop-filter: blur(10px);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  nav { width: 98%; }
+  .menu-grid { grid-template-columns: 1fr; }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
